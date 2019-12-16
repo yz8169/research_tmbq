@@ -1,0 +1,87 @@
+@()(implicit request: play.api.mvc.RequestHeader)
+@main("Home-TMBQ") {
+
+	<div class="row">
+		<div class="form-group col-sm-12">
+			<h2 class="page-heading"
+			style="text-align: left;
+				border-bottom: 5px solid #e9f3f4">Analysis</h2>
+		</div>
+	</div>
+
+	<div class="row">
+
+		<div class="tab-pane active" id="kegg">
+			<form class="form-horizontal" method="get" id="form">
+
+				<div class="form-group">
+					<label class="control-label col-sm-2">Metabolic platform:</label>
+					<div class="col-sm-4">
+						<select class="form-control" name="platform">
+							<option value="waters">Waters</option>
+							<option value="agilent">Agilent</option>
+
+						</select>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="control-label col-sm-2">Data file(*.zip):</label>
+					<div class="col-sm-8">
+						<input id="dataFiles" type="file" class="file control-label" name="dataFile"
+						data-show-preview="false" accept=".zip"
+						data-show-upload="false" >
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="control-label col-sm-2">Sample info config file（*.xlsx）:</label>
+					<div class="col-sm-8">
+						<input id="sampleConfigFile" type="file" class="file control-label" name="sampleConfigFile"
+						data-show-preview="false" accept=".xlsx"
+						data-show-upload="false" >
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="control-label col-sm-2">Compound info config file（*.xlsx）:</label>
+					<div class="col-sm-8">
+						<input id="compoundConfigFile" type="file" class="file control-label" name="compoundConfigFile"
+						data-show-preview="false" accept=".xlsx"
+						data-show-upload="false" >
+					</div>
+				</div>
+
+
+				<div class="form-group">
+					<div class="actions col-sm-offset-2 col-sm-2">
+						<button type="button" class="btn btn-primary" style="width: 90%;" id="search" onclick="Mission.myRun">
+							Run</button>
+					</div>
+
+					<div class="actions  col-sm-2">
+						<button type="reset" class="btn btn-primary" style="width: 90%;">
+							Reset</button>
+					</div>
+				</div>
+
+			</form>
+
+
+		</div>
+
+	</div>
+
+	<script>
+		$(function () {
+		    Mission.init
+
+		})
+
+	</script>
+
+
+
+
+
+}
