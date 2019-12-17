@@ -5,12 +5,12 @@ import play.api.mvc.{AbstractController, ControllerComponents}
 import play.api.routing.JavaScriptReverseRouter
 
 /**
-  * Created by Administrator on 2019/7/2
-  */
+ * Created by Administrator on 2019/7/2
+ */
 class AppController @Inject()(cc: ControllerComponents) extends AbstractController(cc) {
 
-  def toIndex=Action{implicit request=>
-//    println("in")
+  def toIndex = Action { implicit request =>
+    //    println("in")
     Ok(views.html.index())
   }
 
@@ -18,6 +18,7 @@ class AppController @Inject()(cc: ControllerComponents) extends AbstractControll
   def javascriptRoutes = Action { implicit request =>
     Ok(
       JavaScriptReverseRouter("jsRoutes")(
+        controllers.routes.javascript.MissionController.newMission,
 
       )
     ).as("text/javascript")

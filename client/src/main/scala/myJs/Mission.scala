@@ -2,7 +2,6 @@ package myJs
 
 import scalatags.Text.all._
 
-import scala.collection.mutable.ArrayBuffer
 import scala.scalajs.js
 import scala.scalajs.js.annotation._
 import myJs.Utils._
@@ -17,8 +16,6 @@ import scalajs.js.JSConverters._
 import org.scalajs.dom._
 import org.scalajs.jquery.jQuery
 import org.scalajs.jquery.JQueryAjaxSettings
-
-
 
 @JSExportTopLevel("Mission")
 object Mission {
@@ -53,10 +50,11 @@ object Mission {
         if (xhr.readyState == XMLHttpRequest.DONE) {
           val data = xhr.response
           val rs = JSON.parse(data.toString).asInstanceOf[js.Dictionary[js.Any]]
+          println(rs)
           layer.close(index)
           val valid = rs("valid").asInstanceOf[Boolean]
           if (valid) {
-            window.location.href = g.jsRoutes.controllers.UserController.missionManageBefore().url.toString
+
           } else {
             g.swal("Error", rs.myGet("message"), "error")
           }

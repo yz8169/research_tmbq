@@ -38,7 +38,9 @@ lazy val server = (project in file("server")).settings(commonSettings).settings(
     "org.scalaz" %% "scalaz-core" % "7.2.29",
     "org.scalaz" %% "scalaz-effect" % "7.2.29",
     "com.h2database" % "h2" % "1.4.199",
-    "javax.xml.bind" % "jaxb-api" % "2.3.0"
+    "javax.xml.bind" % "jaxb-api" % "2.3.0",
+    "org.apache.commons" % "commons-lang3" % "3.6",
+    "org.scala-lang.modules" %% "scala-parallel-collections" % "0.2.0"
 
 
   )
