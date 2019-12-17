@@ -38,7 +38,7 @@ object Mission {
       val element = div(id := "content",
         span(id := "info", "Running",
           span(id := "progress", "。。。")), " ",
-        img(src := "/assets/images/running2.gif", cls := "runningImage", width := 30, height := 20)
+        img(src := "/assets/images/running2.gif", cls := "runningImage")
       ).render
       val layerOptions = LayerOptions.title(zhInfo).closeBtn(0).skin("layui-layer-molv").btn(js.Array())
       val index = layer.alert(element, layerOptions)
@@ -50,11 +50,13 @@ object Mission {
         if (xhr.readyState == XMLHttpRequest.DONE) {
           val data = xhr.response
           val rs = JSON.parse(data.toString).asInstanceOf[js.Dictionary[js.Any]]
-          println(rs)
           layer.close(index)
           val valid = rs("valid").asInstanceOf[Boolean]
           if (valid) {
-
+            clearFile
+            val missionId = rs.myGetInt("missionId")
+            val url = s"${g.jsRoutes.controllers.MissionController.resultBefore().url.toString}?missionId=${missionId}"
+            window.open(target = "_blank").location.href = url
           } else {
             g.swal("Error", rs.myGet("message"), "error")
           }
@@ -62,6 +64,15 @@ object Mission {
       }
       xhr.send(formData)
     }
+  }
+
+  def clearFile = {
+    g.$(":input[name='compoundConfigFile']").fileinput("clear")
+    g.$(":input[name='sampleConfigFile']").fileinput("clear")
+    g.$(":input[name='dataFile']").fileinput("clear")
+    g.$("#form").bootstrapValidator("revalidateField", "compoundConfigFile")
+    g.$("#form").bootstrapValidator("revalidateField", "sampleConfigFile")
+    g.$("#form").bootstrapValidator("revalidateField", "dataFile")
   }
 
   def bootStrapValidator = {

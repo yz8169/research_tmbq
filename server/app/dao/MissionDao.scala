@@ -27,7 +27,7 @@ class MissionDao @Inject()(protected val dbConfigProvider: DatabaseConfigProvide
 
   def selectOptionByMissionName(userId: Int, missionName: String): Future[Option[MissionRow]] = db.run(Mission.filter(_.missionName === missionName).result.headOption)
 
-  def selectByMissionId(userId: Int, missionId: Int): Future[MissionRow] = db.run(Mission.filter(_.id === missionId).result.head)
+  def selectByMissionId(missionId: Int): Future[MissionRow] = db.run(Mission.filter(_.id === missionId).result.head)
 
   def update(row: MissionRow): Future[Unit] = db.run(Mission.filter(_.id === row.id).update(row)).map(_ => ())
 

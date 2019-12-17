@@ -4,13 +4,18 @@
 # ~~~~
 
 # An example controller showing a sample home page
-GET         /                        controllers.AppController.toIndex
+GET         /                                controllers.AppController.toIndex
 
-POST        /tmbq/newMission         controllers.MissionController.newMission
+POST        /tmbq/newMission                 controllers.MissionController.newMission
+GET         /tmbq/resultBefore               controllers.MissionController.resultBefore
+GET         /tmbq/updateMissionSocket        controllers.MissionController.updateMissionSocket
+GET         /tmbq/downloadResult             controllers.MissionController.downloadResult
+GET         /tmbq/downloadLog                controllers.MissionController.downloadLog
+GET         /tmbq/getMissionState            controllers.MissionController.getMissionState
 
 
-GET         /javascriptRoutes        controllers.AppController.javascriptRoutes
+GET         /javascriptRoutes                controllers.AppController.javascriptRoutes
 
 # Map static resources from the /public folder to the /assets URL path
-GET         /assets/*file            controllers.Assets.at(path="/public", file)
+GET         /assets/*file                    controllers.Assets.at(path="/public", file)
       

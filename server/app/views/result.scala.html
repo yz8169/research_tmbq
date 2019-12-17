@@ -1,0 +1,23 @@
+@(missionId: Int)(implicit request: play.api.mvc.RequestHeader)
+<script src="@routes.Assets.at("bootstrap/js/jquery-3.1.1.min.js")" type="text/javascript"></script>
+@scalajs.html.scripts("client", routes.Assets.at(_).toString, name => getClass.getResource(s"/public/$name") != null)
+<script src="@routes.AppController.javascriptRoutes" type="text/javascript"></script>
+<style>
+		.runningImg {
+			margin-bottom: 0px;
+		}
+</style>
+
+<div class="row">
+	<div class="col-sm-12" id="info">
+	</div>
+
+</div>
+
+<script>
+		$(function () {
+			Result.init(@missionId)
+
+		})
+
+</script>

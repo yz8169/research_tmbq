@@ -31,6 +31,7 @@ import models.Tables._
 import utils.Utils
 import implicits.Implicits._
 import tool.Pojo.IndexData
+import scala.language.postfixOps
 
 
 /**
@@ -62,10 +63,84 @@ class MissionController @Inject()(cc: ControllerComponents, formTool: FormTool,
       WebTool.fileMove("compoundConfigFile", compoundConfigFile)
       val newMission = mission.copy(state = "wait")
       missionDao.update(newMission).map { x =>
-        Ok(Json.obj("valid" -> true))
+        Ok(Json.obj("valid" -> true, "missionId" -> mission.id))
       }
     }
 
+  }
+
+  def resultBefore = Action { implicit request =>
+    val data = formTool.missionIdForm.bindFromRequest().get
+    Ok(views.html.result(data.missionId))
+  }
+
+  def updateMissionSocket = WebSocket.accept[JsValue, JsValue] {
+    implicit request =>
+      case class MissionAction(missionId: Int, action: String)
+      ActorFlow.actorRef(out => Props(new Actor {
+        override def receive: Receive = {
+          case msg: JsValue if (msg \ "missionId").asOpt[Int].nonEmpty =>
+            val missionId = (msg \ "missionId").as[Int]
+            system.scheduler.scheduleOnce(0 seconds, self, MissionAction(missionId, "update"))
+          case MissionAction(missionId, action) =>
+            missionDao.selectByMissionId(missionId).map {
+              mission =>
+                out ! Json.obj("state" -> mission.state)
+                if (!List("success", "error").contains(mission.state)) {
+                  system.scheduler.scheduleOnce(3 seconds, self, MissionAction(missionId, "update"))
+                }
+            }
+          case _ =>
+            self ! PoisonPill
+        }
+
+        override def postStop(): Unit = {
+          self ! PoisonPill
+        }
+      }))
+
+  }
+
+  def downloadResult = Action.async {
+    implicit request =>
+      val data = formTool.missionIdForm.bindFromRequest().get
+      val missionId = data.missionId
+      missionDao.selectByMissionId(missionId).map {
+        mission =>
+          val missionIdDir = Tool.getMissionIdDir(missionId)
+          val resultDir = new File(missionIdDir, "result")
+          val resultFile = new File(missionIdDir, s"result.zip")
+          if (!resultFile.exists()) ZipUtil.pack(resultDir, resultFile)
+          Ok.sendFile(resultFile).withHeaders(
+            //            CACHE_CONTROL -> "max-age=3600",
+            CONTENT_DISPOSITION -> WebTool.getContentDisposition(s"${mission.missionName}_result.zip"),
+            CONTENT_TYPE -> "application/x-download"
+          )
+      }
+  }
+
+  def downloadLog = Action.async {
+    implicit request =>
+      val data = formTool.missionIdForm.bindFromRequest().get
+      val missionId = data.missionId
+      missionDao.selectByMissionId(missionId).map {
+        mission =>
+          val missionIdDir = Tool.getMissionIdDir(missionId)
+          val logFile = new File(missionIdDir, s"log.txt")
+          Ok.sendFile(logFile).withHeaders(
+            //            CACHE_CONTROL -> "max-age=3600",
+            CONTENT_DISPOSITION -> WebTool.getContentDisposition(s"${mission.missionName}_log.txt"),
+            CONTENT_TYPE -> "application/x-download"
+          )
+      }
+  }
+
+  def getMissionState = Action.async { implicit request =>
+    val data = formTool.missionIdForm.bindFromRequest().get
+    val missionId = data.missionId
+    missionDao.selectByMissionId(missionId).map { mission =>
+      Ok(Json.obj("state" -> mission.state))
+    }
   }
 
 

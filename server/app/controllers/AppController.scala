@@ -10,7 +10,6 @@ import play.api.routing.JavaScriptReverseRouter
 class AppController @Inject()(cc: ControllerComponents) extends AbstractController(cc) {
 
   def toIndex = Action { implicit request =>
-    //    println("in")
     Ok(views.html.index())
   }
 
@@ -19,6 +18,11 @@ class AppController @Inject()(cc: ControllerComponents) extends AbstractControll
     Ok(
       JavaScriptReverseRouter("jsRoutes")(
         controllers.routes.javascript.MissionController.newMission,
+        controllers.routes.javascript.MissionController.resultBefore,
+        controllers.routes.javascript.MissionController.updateMissionSocket,
+        controllers.routes.javascript.MissionController.downloadResult,
+        controllers.routes.javascript.MissionController.downloadLog,
+        controllers.routes.javascript.MissionController.getMissionState,
 
       )
     ).as("text/javascript")
