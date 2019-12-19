@@ -19,22 +19,22 @@ import myJs.myPkg.jquery.jquery._
 object Result {
 
   @JSExport("init")
-  def init(missionId: Int) = {
-    updateMissionSocket(missionId)
+  def init(key: String) = {
+    updateMissionSocket(key)
 
   }
 
-  def updateMissionSocket(missionId: Int) = {
+  def updateMissionSocket(key: String) = {
     val url = g.jsRoutes.controllers.MissionController.updateMissionSocket().url.toString
     val wsUri = s"ws://${window.location.host}${url}"
-    webSocket(wsUri, missionId)
+    webSocket(wsUri, key)
   }
 
-  def dealMessage(data: js.Dictionary[String], missionId: Int) = {
+  def dealMessage(data: js.Dictionary[String], key: String) = {
     if (data("state") == "success") {
       jQuery("#info").html("Task is completed!")
-      val url = s"${g.jsRoutes.controllers.MissionController.downloadResult().url.toString}?missionId=${missionId}"
-      window.openNewWindow(url)
+      val url = s"${g.jsRoutes.controllers.MissionController.downloadResult().url.toString}?key=${key}"
+      window.redirect(url)
     } else if (List("running", "wait").contains(data("state"))) {
       val element = div()(
         span()("Task is Running"),
@@ -44,41 +44,41 @@ object Result {
       jQuery("#info").html(element)
     } else if (List("error").contains(data("state"))) {
       jQuery("#info").html("Task is failed!")
-      val url = s"${g.jsRoutes.controllers.MissionController.downloadLog().url.toString}?missionId=${missionId}"
-      window.openNewWindow(url)
+      val url = s"${g.jsRoutes.controllers.MissionController.downloadLog().url.toString}?key=${key}"
+      window.redirect(url)
     }
   }
 
-  def webSocket(wsUri: String, missionId: Int) = {
+  def webSocket(wsUri: String, key: String) = {
     val websocket = new WebSocket(wsUri)
     websocket.onopen = (evt) =>
-      websocket.send(JSON.stringify(js.Dictionary("missionId" -> missionId)))
+      websocket.send(JSON.stringify(js.Dictionary("key" -> key)))
     websocket.onclose = (evt) =>
       println(s"ERROR:${evt.code},${evt.reason},${evt.wasClean}")
     websocket.onmessage = (evt) => {
       val message = evt.data
       val data = JSON.parse(message.toString).asInstanceOf[js.Dictionary[String]]
-      dealMessage(data, missionId)
+      dealMessage(data, key)
     }
     websocket.onerror = (evt) => {
-      updateByHand(missionId)
+      updateByHand(key)
       println(s"ERROR:${evt.toString}")
     }
   }
 
-  def updateByHand(missionId: Int) = {
+  def updateByHand(key: String) = {
     js.timers.setInterval(3000) {
-      refreshMission(missionId)
+      refreshMission(key)
     }
   }
 
   @JSExport("refreshMission")
-  def refreshMission(missionId: Int, f: () => Any = () => ()) = {
+  def refreshMission(key: String, f: () => Any = () => ()) = {
     val url = g.jsRoutes.controllers.MissionController.getMissionState().url.toString
-    val ajaxSettings = JQueryAjaxSettings.url(s"${url}?missionId=${missionId}").contentType("application/json").
+    val ajaxSettings = JQueryAjaxSettings.url(s"${url}?key=${key}").contentType("application/json").
       `type`("get").success { (data: js.Any, status: String, e: JQueryXHR) =>
       val rs = data.asInstanceOf[js.Dictionary[String]]
-      dealMessage(rs, missionId)
+      dealMessage(rs, key)
       f()
     }
     $.ajax(ajaxSettings)

@@ -59,7 +59,15 @@ trait CSVTool {
 
     }
 
-    def notEmptyLines = lines.filter(x => x.exists(y=>StringUtils.isNotEmpty(y)))
+    def notEmptyLines = lines.filter(x => x.exists(y => StringUtils.isNotEmpty(y)))
+
+    def toTxtFile(file: File) = {
+      lines.map(_.mkString("\t")).toFile(file)
+    }
+
+    def toXlsxFile(file: File) = {
+      lines.map(_.mkString("\t")).toXlsxFile(file)
+    }
 
 
   }

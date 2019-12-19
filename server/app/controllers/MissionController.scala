@@ -50,7 +50,8 @@ class MissionController @Inject()(cc: ControllerComponents, formTool: FormTool,
   def newMission = Action.async(parse.multipartFormData) { implicit request =>
     val threadNum = 2
     val missionName = Tool.generateMissionName
-    val row = MissionRow(0, s"${missionName}", new DateTime(), None, "preparing", threadNum)
+    val data = formTool.missionForm.bindFromRequest().get
+    val row = MissionRow(0, s"${missionName}", data.kind, new DateTime(), None, "preparing", threadNum)
     missionDao.insert(row).flatMap(_ => missionDao.selectByMissionName(row.missionName)).flatMap { mission =>
       val outDir = Tool.getUserMissionDir
       val missionDir = MissionUtils.getMissionDir(mission.id, outDir)
@@ -59,19 +60,23 @@ class MissionController @Inject()(cc: ControllerComponents, formTool: FormTool,
       WebTool.fileMove("dataFile", file)
       val sampleConfigExcelFile = new File(workspaceDir, "sample_config.xlsx")
       WebTool.fileMove("sampleConfigFile", sampleConfigExcelFile)
+      sampleConfigExcelFile.removeEmptyLine
       val compoundConfigFile = new File(workspaceDir, "compound_config.xlsx")
       WebTool.fileMove("compoundConfigFile", compoundConfigFile)
+      compoundConfigFile.removeEmptyLine
       val newMission = mission.copy(state = "wait")
       missionDao.update(newMission).map { x =>
-        Ok(Json.obj("valid" -> true, "missionId" -> mission.id))
+        val json = Json.obj("missionId" -> newMission.id, "missionName" -> newMission.missionName)
+        val base64Key = Json.stringify(json).base64Str
+        Ok(Json.obj("valid" -> true, "key" -> base64Key))
       }
     }
 
   }
 
   def resultBefore = Action { implicit request =>
-    val data = formTool.missionIdForm.bindFromRequest().get
-    Ok(views.html.result(data.missionId))
+    val data = formTool.keyForm.bindFromRequest().get
+    Ok(views.html.result(data.key))
   }
 
   def updateMissionSocket = WebSocket.accept[JsValue, JsValue] {
@@ -79,8 +84,9 @@ class MissionController @Inject()(cc: ControllerComponents, formTool: FormTool,
       case class MissionAction(missionId: Int, action: String)
       ActorFlow.actorRef(out => Props(new Actor {
         override def receive: Receive = {
-          case msg: JsValue if (msg \ "missionId").asOpt[Int].nonEmpty =>
-            val missionId = (msg \ "missionId").as[Int]
+          case msg: JsValue if (msg \ "key").asOpt[String].nonEmpty =>
+            val key = (msg \ "key").as[String]
+            val missionId = Tool.getMissionIdByKey(key)
             system.scheduler.scheduleOnce(0 seconds, self, MissionAction(missionId, "update"))
           case MissionAction(missionId, action) =>
             missionDao.selectByMissionId(missionId).map {
@@ -103,8 +109,8 @@ class MissionController @Inject()(cc: ControllerComponents, formTool: FormTool,
 
   def downloadResult = Action.async {
     implicit request =>
-      val data = formTool.missionIdForm.bindFromRequest().get
-      val missionId = data.missionId
+      val data = formTool.keyForm.bindFromRequest().get
+      val missionId = Tool.getMissionIdByKey(data.key)
       missionDao.selectByMissionId(missionId).map {
         mission =>
           val missionIdDir = Tool.getMissionIdDir(missionId)
@@ -121,8 +127,8 @@ class MissionController @Inject()(cc: ControllerComponents, formTool: FormTool,
 
   def downloadLog = Action.async {
     implicit request =>
-      val data = formTool.missionIdForm.bindFromRequest().get
-      val missionId = data.missionId
+      val data = formTool.keyForm.bindFromRequest().get
+      val missionId = Tool.getMissionIdByKey(data.key)
       missionDao.selectByMissionId(missionId).map {
         mission =>
           val missionIdDir = Tool.getMissionIdDir(missionId)
@@ -136,8 +142,8 @@ class MissionController @Inject()(cc: ControllerComponents, formTool: FormTool,
   }
 
   def getMissionState = Action.async { implicit request =>
-    val data = formTool.missionIdForm.bindFromRequest().get
-    val missionId = data.missionId
+    val data = formTool.keyForm.bindFromRequest().get
+    val missionId = Tool.getMissionIdByKey(data.key)
     missionDao.selectByMissionId(missionId).map { mission =>
       Ok(Json.obj("state" -> mission.state))
     }

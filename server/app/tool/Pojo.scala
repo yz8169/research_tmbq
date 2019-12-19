@@ -24,13 +24,15 @@ object Pojo {
 
   case class MissionIdData(missionId: Int)
 
+  case class KeyData(key: String)
+
   case class ConfigFormData(missionName: String, configName: String)
 
   case class CommandData(workspace: File, command: List[String])
 
   case class IndexData(index: String, compoundName: String)
 
-  case class MissionData(missionName: String)
+  case class MissionData(kind: String)
 
   trait ConfigFileT extends MyDir {
     val configFile: File

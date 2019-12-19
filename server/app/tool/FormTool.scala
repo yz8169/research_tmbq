@@ -87,7 +87,7 @@ class FormTool {
 
   val missionForm = Form(
     mapping(
-      "missionName" -> text,
+      "kind" -> text,
     )(MissionData.apply)(MissionData.unapply)
   )
 
@@ -111,6 +111,12 @@ class FormTool {
     mapping(
       "missionId" -> number
     )(MissionIdData.apply)(MissionIdData.unapply)
+  )
+
+  val keyForm = Form(
+    mapping(
+      "key" -> text
+    )(KeyData.apply)(KeyData.unapply)
   )
 
   case class MissionIdOptionData(missionId: Option[Int])

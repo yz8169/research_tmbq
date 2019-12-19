@@ -52,8 +52,14 @@ class MissionExecActor @Inject()(mission: MissionRow)(implicit val system: Actor
         }
         val threadNum = mission.cpu
         val compoundConfigFile = new File(workspaceDir, "compound_config.xlsx")
-        Tool.productDtaFiles(workspaceDir, compoundConfigFile, dataDir, threadNum)
+        if (mission.kind == "waters") {
+          Tool.productDtaFiles(workspaceDir, compoundConfigFile, dataDir, threadNum)
+        } else {
+          Tool.productAgilentDtaFiles(workspaceDir, compoundConfigFile, dataDir, threadNum)
+        }
+
         val rBaseFile = new File(Tool.rPath, "base.R")
+        println(Tool.rPath)
         FileUtils.copyFileToDirectory(rBaseFile, workspaceDir)
 
         val compoundLines = compoundConfigFile.xlsxLines()

@@ -2,6 +2,7 @@ package implicits
 
 import java.io.File
 
+import org.apache.commons.codec.binary.Base64
 import org.apache.commons.io.FileUtils
 import org.apache.commons.lang3.StringUtils
 import utils.Utils
@@ -76,6 +77,14 @@ trait MyStringTool {
         case Some(value) => true
         case None => false
       }
+    }
+
+    def base64Str = {
+      Base64.encodeBase64String(v.getBytes)
+    }
+
+    def base64DecodeStr = {
+      new String(Base64.decodeBase64(v))
     }
 
   }

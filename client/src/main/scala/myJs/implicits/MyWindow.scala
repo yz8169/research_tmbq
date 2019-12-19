@@ -12,7 +12,10 @@ trait MyWindowTool {
 
     def openNewWindow(url: String) = {
       window.open(target = "_blank").location.href = url
+    }
 
+    def redirect(url: String) = {
+      window.location.href = url
     }
 
   }

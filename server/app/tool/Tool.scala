@@ -13,9 +13,10 @@ import scala.jdk.CollectionConverters._
 import implicits.Implicits._
 import org.apache.commons.lang3.StringUtils
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
+import play.api.libs.json.Json
 import tool.Pojo.{CommandData, IndexData}
 
-import scala.collection.{SeqMap}
+import scala.collection.SeqMap
 import scala.collection.parallel.ForkJoinTaskSupport
 import scala.concurrent.Future
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -96,9 +97,8 @@ object Tool {
   def getCompoundDatas(compoundConfigFile: File) = {
     val compoundLines = compoundConfigFile.xlsxLines()
     case class CompoundData(name: String, function: String, mz: Double, index: Int)
-    val headers = compoundLines.head.split("\t").map(_.toLowerCase)
-    val maps = compoundLines.drop(1).map { line =>
-      val columns = line.split("\t")
+    val headers = compoundLines.head.map(_.toLowerCase)
+    val maps = compoundLines.drop(1).map { columns =>
       headers.zip(columns).toMap
     }
     val mzMap = maps.map { map =>
@@ -157,9 +157,33 @@ object Tool {
     ftMap
   }
 
+  def getAgilentFtMap(file: File) = {
+    val lines = FileUtils.readLines(file).asScala
+    lines.zipWithIndex.withFilter { case (line, i) =>
+      line.trim.startsWith("index:")
+    }.map { case (line, i) =>
+      val trimLine = line.trim
+      val r = "^index:\\s+(\\d+)$".r
+      val r(index) = trimLine
+      val buffer = lines.drop(i + 1).takeWhile { x =>
+        !x.trim().startsWith("index:")
+      }
+      val times = buffer.zipWithIndex.withFilter { case (line, i) =>
+        line.contains("cvParam: time array,")
+      }.map(x => buffer(x._2 + 1)).flatMap { line =>
+        line.trim.replaceAll("^.*\\]\\s+", "").split("\\s+").map(_.toDouble).toBuffer
+      }
+      val values = buffer.zipWithIndex.withFilter { case (line, i) =>
+        line.contains("cvParam: intensity array,")
+      }.map(x => buffer(x._2 + 1)).flatMap { line =>
+        line.trim.replaceAll("^.*\\]\\s+", "").split("\\s+").map(_.toDouble).toBuffer
+      }
+      (index.toDouble, times.zip(values))
+    }.toMap
+  }
+
   def productDtaFiles(tmpDir: File, compoundConfigFile: File, dataDir: File, threadNum: Int) = {
-    val dtaDir = new File(tmpDir, "dta")
-    dtaDir.createDirectoryWhenNoExist
+    val dtaDir = new File(tmpDir, "dta").createDirectoryWhenNoExist
     val compounds = getCompoundDatas(compoundConfigFile)
     val functions = compounds.map(x => s"FUNCTION ${x.function}")
     val files = dataDir.listFiles()
@@ -195,8 +219,38 @@ object Tool {
     Utils.execFuture(f)
   }
 
+  def productAgilentDtaFiles(tmpDir: File, compoundConfigFile: File, dataDir: File, threadNum: Int) = {
+    val dtaDir = new File(tmpDir, "dta").createDirectoryWhenNoExist
+    val compounds = getCompoundDatas(compoundConfigFile)
+    val files = dataDir.listFiles()
+    val finalThreadNum = threadNum
+    val map = files.zipWithIndex.map { case (v, i) =>
+      val j = (i % finalThreadNum) + 1
+      (j, v)
+    }.groupBy(_._1).mapValues(_.map(_._2))
+    val f = map.map { case (i, files) =>
+      Future {
+        files.foreach { file =>
+          val ftMap = getAgilentFtMap(file)
+          compounds.foreach { compound =>
+            val function = s"${compound.function}"
+            val headers = (s"#SEC\tMZ\tINT")
+            val ftLines = ftMap(function.toDouble).map { case (time, value) =>
+              s"${time}\t${compound.mz}\t${value}"
+            }.toList
+            val newLines = headers :: ftLines
+            val dir = new File(dtaDir, compound.name).createDirectoryWhenNoExist
+            val prefix = file.namePrefix
+            FileUtils.writeLines(new File(dir, s"${prefix}.dta"), newLines.asJava)
+          }
+        }
+      }
+    }.toBuffer.reduceLeft(_ zip _ map (x => ()))
+    Utils.execFuture(f)
+  }
+
   val rPath = {
-    val rPath = "C:\\workspaceForIDEA\\tmbq_scala_js\\server\\rScripts"
+    val rPath = "C:\\workspaceForIDEA\\research_tmbq\\server\\rScripts"
     val linuxRPath = linuxPath + "/rScripts"
     if (new File(rPath).exists()) rPath else linuxRPath
   }
@@ -326,6 +380,10 @@ object Tool {
   }
 
   val availCpu = Runtime.getRuntime.availableProcessors() - 1
+
+  def getMissionIdByKey(key: String) = {
+    (Json.parse(key.base64DecodeStr) \ "missionId").as[Int]
+  }
 
 
 }

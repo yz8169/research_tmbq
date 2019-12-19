@@ -54,8 +54,8 @@ object Mission {
           val valid = rs("valid").asInstanceOf[Boolean]
           if (valid) {
             clearFile
-            val missionId = rs.myGetInt("missionId")
-            val url = s"${g.jsRoutes.controllers.MissionController.resultBefore().url.toString}?missionId=${missionId}"
+            val base64Key = rs.myGet("key")
+            val url = s"${g.jsRoutes.controllers.MissionController.resultBefore().url.toString}?key=${base64Key}"
             window.open(target = "_blank").location.href = url
           } else {
             g.swal("Error", rs.myGet("message"), "error")

@@ -49,15 +49,19 @@ trait MyXlxsTool {
             }
           }
           value.trim
-        }.mkString("\t")
+        }.toList
       }
       xssfWorkbook.close()
-      lines.filter(StringUtils.isNotBlank(_))
+      lines.filter(x => x.exists(y => StringUtils.isNotBlank(y)))
     }
 
     def xlsx2Txt(txtFile: File) = {
       val lines = file.xlsxLines()
-      lines.toFile(txtFile)
+      lines.toTxtFile(txtFile)
+    }
+
+    def removeEmptyLine = {
+      file.xlsxLines().toXlsxFile(file)
     }
 
 

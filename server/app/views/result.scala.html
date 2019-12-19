@@ -1,4 +1,4 @@
-@(missionId: Int)(implicit request: play.api.mvc.RequestHeader)
+@(key: String)(implicit request: play.api.mvc.RequestHeader)
 <script src="@routes.Assets.at("bootstrap/js/jquery-3.1.1.min.js")" type="text/javascript"></script>
 @scalajs.html.scripts("client", routes.Assets.at(_).toString, name => getClass.getResource(s"/public/$name") != null)
 <script src="@routes.AppController.javascriptRoutes" type="text/javascript"></script>
@@ -16,7 +16,7 @@
 
 <script>
 		$(function () {
-			Result.init(@missionId)
+			Result.init("@key")
 
 		})
 
