@@ -41,11 +41,10 @@ class MissionExecActor @Inject()(mission: MissionRow)(implicit val system: Actor
       missionDao.update(newMision).map { x =>
         val missionIdDir = Tool.getMissionIdDir(missionId)
         val resultDir = Tool.getMissionResultDir(missionId)
-        val tmpDataDir = new File(workspaceDir, "tmpData").createDirectoryWhenNoExist
+        val tmpDataDir = new File(workspaceDir, "tmpData")
         val dataDir = new File(workspaceDir, "data").createDirectoryWhenNoExist
         val commandExecutor = CommandExecutor(logFile = logFile)
         val file = new File(workspaceDir, "data.zip")
-        ZipUtil.unpack(file, tmpDataDir)
         tmpDataDir.allFiles.foreach { file =>
           val destFile = new File(dataDir, file.getName.toLowerCase)
           FileUtils.copyFile(file, destFile)

@@ -13,8 +13,11 @@ import scala.jdk.CollectionConverters._
 import implicits.Implicits._
 import org.apache.commons.lang3.StringUtils
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
+import org.zeroturnaround.zip.ZipUtil
+import play.api.libs.Files.TemporaryFile
 import play.api.libs.json.Json
-import tool.Pojo.{CommandData, IndexData}
+import play.api.mvc.{MultipartFormData, Request}
+import tool.Pojo.{CommandData, IndexData, MyDataDir}
 
 import scala.collection.SeqMap
 import scala.collection.parallel.ForkJoinTaskSupport
@@ -383,6 +386,20 @@ object Tool {
 
   def getMissionIdByKey(key: String) = {
     (Json.parse(key.base64DecodeStr) \ "missionId").as[Int]
+  }
+
+  def getDataDir(dataDir: File)(implicit request: Request[MultipartFormData[TemporaryFile]]) = {
+    val dataFile = new File(dataDir, "data.zip")
+    WebTool.fileMove("dataFile", dataFile)
+    val sampleConfigFile = new File(dataDir, "sample_config.xlsx")
+    WebTool.fileMove("sampleConfigFile", sampleConfigFile)
+    sampleConfigFile.removeEmptyLine
+    val compoundConfigFile = new File(dataDir, "compound_config.xlsx")
+    WebTool.fileMove("compoundConfigFile", compoundConfigFile)
+    compoundConfigFile.removeEmptyLine
+    val tmpDataDir = new File(dataDir, "tmpData").createDirectoryWhenNoExist
+    ZipUtil.unpack(dataFile, tmpDataDir)
+    MyDataDir(dataDir,tmpDataDir,dataFile, sampleConfigFile, compoundConfigFile)
   }
 
 

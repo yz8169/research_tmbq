@@ -87,6 +87,10 @@ trait MyStringTool {
       new String(Base64.decodeBase64(v))
     }
 
+    def replaceLf={
+      v.replaceAll("\n"," ").replaceAll("\r"," ")
+    }
+
   }
 
 

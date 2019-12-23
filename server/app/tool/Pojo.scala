@@ -74,7 +74,7 @@ object Pojo {
                            uniDir: File, potentialDir: File, corDir: File, corInDir: InDir, pathwayDir: File, pathwayInDir: InDir,
                            diagnoseDir: File, diagnoseInDir: InDirDignose)
 
-  case class MyDataDir(tmpDir: File, indexFile: File)
+  case class MyDataDir(tmpDir: File, tmpDataDir: File, dataFile: File, sampleConfigExcelFile: File, compoundConfigFile: File)
 
   case class DataFileInfo(sampleIds: List[String])
 

@@ -67,11 +67,6 @@ object WebTool {
     fileMoveDirOp(fieldName, dir).get
   }
 
-  def getDataDir(dataDir: File)(implicit request: Request[MultipartFormData[TemporaryFile]]) = {
-    val indexFile = WebTool.fileMoveDir("indexFile", dataDir)
-    MyDataDir(dataDir, indexFile)
-  }
-
   def getContentDisposition(url: String) = {
     val encodeUrl = urlEncode(url)
     s"attachment; filename*=utf-8''${encodeUrl}"

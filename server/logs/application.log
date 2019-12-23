@@ -1,116 +1,120 @@
-2019-12-19 15:31:53,238 [WARN] from play.api.http.HttpConfiguration in play-dev-mode-akka.actor.default-dispatcher-8 - 
+2019-12-23 17:25:40,765 [WARN] from play.api.http.HttpConfiguration in play-dev-mode-akka.actor.default-dispatcher-3 - 
 The application secret is too short and does not have the recommended amount of entropy.  Your application is not secure
 and it will fail to start in production mode.
 To set the application secret, please read http://playframework.com/documentation/latest/ApplicationSecret
           
-2019-12-19 15:31:53,566 [INFO] from play.api.http.EnabledFilters in play-dev-mode-akka.actor.default-dispatcher-8 - Enabled Filters (see <https://www.playframework.com/documentation/latest/Filters>):
+2019-12-23 17:25:41,019 [INFO] from play.api.http.EnabledFilters in play-dev-mode-akka.actor.default-dispatcher-3 - Enabled Filters (see <https://www.playframework.com/documentation/latest/Filters>):
 
     play.filters.gzip.GzipFilter
 
-2019-12-19 15:31:53,581 [INFO] from play.api.Play in play-dev-mode-akka.actor.default-dispatcher-8 - Application started (Dev) (no global state)
-2019-12-19 15:31:53,590 [WARN] from slick.basic.DatabaseConfig in application-akka.actor.default-dispatcher-2 - Use `profile` instead of `driver`. The latter is deprecated since Slick 3.2 and will be removed.
-2019-12-19 15:31:55,233 [WARN] from akka.actor.ActorSystemImpl in play-dev-mode-akka.actor.default-dispatcher-6 - Explicitly set HTTP header 'Content-Type: application/x-download' is ignored, explicit `Content-Type` header is not allowed. Set `HttpResponse.entity.contentType` instead.
-2019-12-19 15:31:55,234 [WARN] from akka.actor.ActorSystemImpl in play-dev-mode-akka.actor.default-dispatcher-6 - Explicitly set HTTP header 'Content-Type: application/x-download' is ignored, explicit `Content-Type` header is not allowed. Set `HttpResponse.entity.contentType` instead.
-2019-12-19 15:31:55,283 [WARN] from akka.actor.ActorSystemImpl in play-dev-mode-akka.actor.default-dispatcher-3 - Explicitly set HTTP header 'Content-Type: application/x-download' is ignored, explicit `Content-Type` header is not allowed. Set `HttpResponse.entity.contentType` instead.
-2019-12-19 15:31:55,341 [WARN] from akka.actor.ActorSystemImpl in play-dev-mode-akka.actor.default-dispatcher-6 - Explicitly set HTTP header 'Content-Type: application/x-download' is ignored, explicit `Content-Type` header is not allowed. Set `HttpResponse.entity.contentType` instead.
-2019-12-19 15:31:55,366 [WARN] from akka.actor.ActorSystemImpl in play-dev-mode-akka.actor.default-dispatcher-3 - Explicitly set HTTP header 'Content-Type: application/x-download' is ignored, explicit `Content-Type` header is not allowed. Set `HttpResponse.entity.contentType` instead.
-2019-12-19 15:31:55,427 [WARN] from akka.actor.ActorSystemImpl in play-dev-mode-akka.actor.default-dispatcher-2 - Explicitly set HTTP header 'Content-Type: application/x-download' is ignored, explicit `Content-Type` header is not allowed. Set `HttpResponse.entity.contentType` instead.
-2019-12-19 15:31:55,879 [WARN] from akka.actor.ActorSystemImpl in play-dev-mode-akka.actor.default-dispatcher-2 - Explicitly set HTTP header 'Content-Type: application/x-download' is ignored, explicit `Content-Type` header is not allowed. Set `HttpResponse.entity.contentType` instead.
-2019-12-19 15:31:56,184 [WARN] from akka.actor.ActorSystemImpl in play-dev-mode-akka.actor.default-dispatcher-3 - Explicitly set HTTP header 'Content-Type: application/x-download' is ignored, explicit `Content-Type` header is not allowed. Set `HttpResponse.entity.contentType` instead.
-2019-12-19 15:31:56,188 [WARN] from akka.actor.ActorSystemImpl in play-dev-mode-akka.actor.default-dispatcher-9 - Explicitly set HTTP header 'Content-Type: application/x-download' is ignored, explicit `Content-Type` header is not allowed. Set `HttpResponse.entity.contentType` instead.
-2019-12-19 15:31:56,199 [WARN] from akka.actor.ActorSystemImpl in play-dev-mode-akka.actor.default-dispatcher-6 - Explicitly set HTTP header 'Content-Type: application/x-download' is ignored, explicit `Content-Type` header is not allowed. Set `HttpResponse.entity.contentType` instead.
-2019-12-19 15:31:56,207 [WARN] from akka.actor.ActorSystemImpl in play-dev-mode-akka.actor.default-dispatcher-3 - Explicitly set HTTP header 'Content-Type: application/x-download' is ignored, explicit `Content-Type` header is not allowed. Set `HttpResponse.entity.contentType` instead.
-2019-12-19 15:31:57,719 [WARN] from akka.actor.ActorSystemImpl in play-dev-mode-akka.actor.default-dispatcher-4 - Explicitly set HTTP header 'Content-Type: application/x-download' is ignored, explicit `Content-Type` header is not allowed. Set `HttpResponse.entity.contentType` instead.
-2019-12-19 15:32:00,656 [WARN] from akka.actor.ActorSystemImpl in play-dev-mode-akka.actor.default-dispatcher-4 - Explicitly set HTTP header 'Content-Type: application/x-download' is ignored, explicit `Content-Type` header is not allowed. Set `HttpResponse.entity.contentType` instead.
-2019-12-19 15:32:03,750 [WARN] from akka.actor.ActorSystemImpl in play-dev-mode-akka.actor.default-dispatcher-2 - Explicitly set HTTP header 'Content-Type: application/x-download' is ignored, explicit `Content-Type` header is not allowed. Set `HttpResponse.entity.contentType` instead.
-2019-12-19 15:32:06,670 [WARN] from akka.actor.ActorSystemImpl in play-dev-mode-akka.actor.default-dispatcher-4 - Explicitly set HTTP header 'Content-Type: application/x-download' is ignored, explicit `Content-Type` header is not allowed. Set `HttpResponse.entity.contentType` instead.
-2019-12-19 15:32:09,690 [WARN] from akka.actor.ActorSystemImpl in play-dev-mode-akka.actor.default-dispatcher-4 - Explicitly set HTTP header 'Content-Type: application/x-download' is ignored, explicit `Content-Type` header is not allowed. Set `HttpResponse.entity.contentType` instead.
-2019-12-19 15:32:12,692 [WARN] from akka.actor.ActorSystemImpl in play-dev-mode-akka.actor.default-dispatcher-6 - Explicitly set HTTP header 'Content-Type: application/x-download' is ignored, explicit `Content-Type` header is not allowed. Set `HttpResponse.entity.contentType` instead.
-2019-12-19 15:32:15,959 [WARN] from akka.actor.ActorSystemImpl in play-dev-mode-akka.actor.default-dispatcher-6 - Explicitly set HTTP header 'Content-Type: application/x-download' is ignored, explicit `Content-Type` header is not allowed. Set `HttpResponse.entity.contentType` instead.
-2019-12-19 15:32:18,841 [WARN] from akka.actor.ActorSystemImpl in play-dev-mode-akka.actor.default-dispatcher-3 - Explicitly set HTTP header 'Content-Type: application/x-download' is ignored, explicit `Content-Type` header is not allowed. Set `HttpResponse.entity.contentType` instead.
-2019-12-19 15:37:25,197 [WARN] from akka.actor.ActorSystemImpl in play-dev-mode-akka.actor.default-dispatcher-8 - Explicitly set HTTP header 'Content-Type: application/x-download' is ignored, explicit `Content-Type` header is not allowed. Set `HttpResponse.entity.contentType` instead.
-2019-12-19 15:37:31,573 [WARN] from akka.actor.ActorSystemImpl in play-dev-mode-akka.actor.default-dispatcher-4 - Explicitly set HTTP header 'Content-Type: application/x-download' is ignored, explicit `Content-Type` header is not allowed. Set `HttpResponse.entity.contentType` instead.
-2019-12-19 15:37:34,146 [WARN] from akka.actor.ActorSystemImpl in play-dev-mode-akka.actor.default-dispatcher-4 - Explicitly set HTTP header 'Content-Type: application/x-download' is ignored, explicit `Content-Type` header is not allowed. Set `HttpResponse.entity.contentType` instead.
-2019-12-19 15:37:37,157 [WARN] from akka.actor.ActorSystemImpl in play-dev-mode-akka.actor.default-dispatcher-8 - Explicitly set HTTP header 'Content-Type: application/x-download' is ignored, explicit `Content-Type` header is not allowed. Set `HttpResponse.entity.contentType` instead.
-2019-12-19 15:38:24,127 [WARN] from akka.actor.ActorSystemImpl in play-dev-mode-akka.actor.default-dispatcher-32 - Explicitly set HTTP header 'Content-Type: application/x-download' is ignored, explicit `Content-Type` header is not allowed. Set `HttpResponse.entity.contentType` instead.
-2019-12-19 15:44:01,676 [WARN] from akka.actor.ActorSystemImpl in play-dev-mode-akka.actor.default-dispatcher-75 - Explicitly set HTTP header 'Content-Type: application/x-download' is ignored, explicit `Content-Type` header is not allowed. Set `HttpResponse.entity.contentType` instead.
-2019-12-19 15:44:52,863 [WARN] from play.api.http.HttpConfiguration in play-dev-mode-akka.actor.default-dispatcher-93 - 
+2019-12-23 17:25:41,033 [INFO] from play.api.Play in play-dev-mode-akka.actor.default-dispatcher-3 - Application started (Dev) (no global state)
+2019-12-23 17:25:41,048 [WARN] from slick.basic.DatabaseConfig in application-akka.actor.default-dispatcher-8 - Use `profile` instead of `driver`. The latter is deprecated since Slick 3.2 and will be removed.
+2019-12-23 17:54:15,095 [WARN] from play.api.http.HttpConfiguration in play-dev-mode-akka.actor.default-dispatcher-34 - 
 The application secret is too short and does not have the recommended amount of entropy.  Your application is not secure
 and it will fail to start in production mode.
 To set the application secret, please read http://playframework.com/documentation/latest/ApplicationSecret
           
-2019-12-19 15:44:52,902 [INFO] from play.api.http.EnabledFilters in play-dev-mode-akka.actor.default-dispatcher-93 - Enabled Filters (see <https://www.playframework.com/documentation/latest/Filters>):
+2019-12-23 17:54:15,147 [INFO] from play.api.http.EnabledFilters in play-dev-mode-akka.actor.default-dispatcher-34 - Enabled Filters (see <https://www.playframework.com/documentation/latest/Filters>):
 
     play.filters.gzip.GzipFilter
 
-2019-12-19 15:44:52,904 [WARN] from slick.basic.DatabaseConfig in application-akka.actor.default-dispatcher-2 - Use `profile` instead of `driver`. The latter is deprecated since Slick 3.2 and will be removed.
-2019-12-19 15:44:52,908 [INFO] from play.api.Play in play-dev-mode-akka.actor.default-dispatcher-93 - Application started (Dev) (no global state)
-2019-12-19 15:46:04,558 [WARN] from akka.actor.ActorSystemImpl in play-dev-mode-akka.actor.default-dispatcher-95 - Explicitly set HTTP header 'Content-Type: application/x-download' is ignored, explicit `Content-Type` header is not allowed. Set `HttpResponse.entity.contentType` instead.
-2019-12-19 15:59:27,578 [ERROR] from application in play-dev-mode-akka.actor.default-dispatcher-134 - 
+2019-12-23 17:54:15,150 [WARN] from slick.basic.DatabaseConfig in application-akka.actor.default-dispatcher-5 - Use `profile` instead of `driver`. The latter is deprecated since Slick 3.2 and will be removed.
+2019-12-23 17:54:15,160 [INFO] from play.api.Play in play-dev-mode-akka.actor.default-dispatcher-34 - Application started (Dev) (no global state)
+2019-12-23 17:59:32,389 [WARN] from play.api.http.HttpConfiguration in play-dev-mode-akka.actor.default-dispatcher-70 - 
+The application secret is too short and does not have the recommended amount of entropy.  Your application is not secure
+and it will fail to start in production mode.
+To set the application secret, please read http://playframework.com/documentation/latest/ApplicationSecret
+          
+2019-12-23 17:59:32,443 [WARN] from slick.basic.DatabaseConfig in application-akka.actor.default-dispatcher-5 - Use `profile` instead of `driver`. The latter is deprecated since Slick 3.2 and will be removed.
+2019-12-23 17:59:32,445 [INFO] from play.api.http.EnabledFilters in play-dev-mode-akka.actor.default-dispatcher-70 - Enabled Filters (see <https://www.playframework.com/documentation/latest/Filters>):
 
-! @7e83187ca - Internal server error, for (GET) [/] ->
+    play.filters.gzip.GzipFilter
+
+2019-12-23 17:59:32,448 [INFO] from play.api.Play in play-dev-mode-akka.actor.default-dispatcher-70 - Application started (Dev) (no global state)
+2019-12-23 18:01:24,720 [WARN] from play.api.http.HttpConfiguration in play-dev-mode-akka.actor.default-dispatcher-75 - 
+The application secret is too short and does not have the recommended amount of entropy.  Your application is not secure
+and it will fail to start in production mode.
+To set the application secret, please read http://playframework.com/documentation/latest/ApplicationSecret
+          
+2019-12-23 18:01:24,766 [INFO] from play.api.http.EnabledFilters in play-dev-mode-akka.actor.default-dispatcher-75 - Enabled Filters (see <https://www.playframework.com/documentation/latest/Filters>):
+
+    play.filters.gzip.GzipFilter
+
+2019-12-23 18:01:24,767 [WARN] from slick.basic.DatabaseConfig in application-akka.actor.default-dispatcher-7 - Use `profile` instead of `driver`. The latter is deprecated since Slick 3.2 and will be removed.
+2019-12-23 18:01:24,769 [INFO] from play.api.Play in play-dev-mode-akka.actor.default-dispatcher-75 - Application started (Dev) (no global state)
+2019-12-23 18:02:42,018 [WARN] from play.api.http.HttpConfiguration in play-dev-mode-akka.actor.default-dispatcher-130 - 
+The application secret is too short and does not have the recommended amount of entropy.  Your application is not secure
+and it will fail to start in production mode.
+To set the application secret, please read http://playframework.com/documentation/latest/ApplicationSecret
+          
+2019-12-23 18:02:42,059 [INFO] from play.api.http.EnabledFilters in play-dev-mode-akka.actor.default-dispatcher-130 - Enabled Filters (see <https://www.playframework.com/documentation/latest/Filters>):
+
+    play.filters.gzip.GzipFilter
+
+2019-12-23 18:02:42,060 [INFO] from play.api.Play in play-dev-mode-akka.actor.default-dispatcher-130 - Application started (Dev) (no global state)
+2019-12-23 18:02:42,067 [WARN] from slick.basic.DatabaseConfig in application-akka.actor.default-dispatcher-6 - Use `profile` instead of `driver`. The latter is deprecated since Slick 3.2 and will be removed.
+2019-12-23 18:05:02,858 [ERROR] from application in application-akka.actor.default-dispatcher-47 - 
+
+! @7e96k252g - Internal server error, for (POST) [/tmbq/newMission] ->
  
-play.sbt.PlayExceptions$CompilationException: Compilation error[value split is not a member of List[String]
-did you mean splitAt?]
-	at play.sbt.PlayExceptions$CompilationException$.apply(PlayExceptions.scala:37)
-	at play.sbt.PlayExceptions$CompilationException$.apply(PlayExceptions.scala:37)
-	at scala.Option.map(Option.scala:230)
-	at play.sbt.run.PlayReload$.$anonfun$taskFailureHandler$1(PlayReload.scala:41)
-	at scala.Option.map(Option.scala:230)
-	at play.sbt.run.PlayReload$.taskFailureHandler(PlayReload.scala:36)
-	at play.sbt.run.PlayReload$.compileFailure(PlayReload.scala:29)
-	at play.sbt.run.PlayReload$.$anonfun$compile$3(PlayReload.scala:64)
-	at scala.util.Either$LeftProjection.map(Either.scala:573)
-	at play.sbt.run.PlayReload$.compile(PlayReload.scala:64)
-	at play.sbt.run.PlayRun$.$anonfun$playRunTask$4(PlayRun.scala:80)
-	at play.runsupport.Reloader.$anonfun$reload$1(Reloader.scala:501)
-	at play.runsupport.Reloader$$anon$1.run(Reloader.scala:58)
-	at java.security.AccessController.doPrivileged(Native Method)
-	at play.runsupport.Reloader$.play$runsupport$Reloader$$withReloaderContextClassLoader(Reloader.scala:64)
-	at play.runsupport.Reloader.reload(Reloader.scala:501)
-	at play.core.server.DevServerStart$$anon$1.get(DevServerStart.scala:143)
-	at play.core.server.AkkaHttpServer.handleRequest(AkkaHttpServer.scala:304)
-	at play.core.server.AkkaHttpServer.$anonfun$createServerBinding$1(AkkaHttpServer.scala:189)
-	at akka.stream.impl.fusing.MapAsync$$anon$30.onPush(Ops.scala:1261)
-	at akka.stream.impl.fusing.GraphInterpreter.processPush(GraphInterpreter.scala:523)
-	at akka.stream.impl.fusing.GraphInterpreter.execute(GraphInterpreter.scala:409)
-	at akka.stream.impl.fusing.GraphInterpreterShell.runBatch(ActorGraphInterpreter.scala:606)
-	at akka.stream.impl.fusing.GraphInterpreterShell$AsyncInput.execute(ActorGraphInterpreter.scala:485)
-	at akka.stream.impl.fusing.GraphInterpreterShell.processEvent(ActorGraphInterpreter.scala:581)
-	at akka.stream.impl.fusing.ActorGraphInterpreter.akka$stream$impl$fusing$ActorGraphInterpreter$$processEvent(ActorGraphInterpreter.scala:749)
-	at akka.stream.impl.fusing.ActorGraphInterpreter$$anonfun$receive$1.applyOrElse(ActorGraphInterpreter.scala:764)
-	at akka.actor.Actor.aroundReceive(Actor.scala:539)
-	at akka.actor.Actor.aroundReceive$(Actor.scala:537)
-	at akka.stream.impl.fusing.ActorGraphInterpreter.aroundReceive(ActorGraphInterpreter.scala:671)
-	at akka.actor.ActorCell.receiveMessage(ActorCell.scala:612)
-	at akka.actor.ActorCell.invoke(ActorCell.scala:581)
-	at akka.dispatch.Mailbox.processMailbox(Mailbox.scala:268)
-	at akka.dispatch.Mailbox.run(Mailbox.scala:229)
-	at akka.dispatch.Mailbox.exec(Mailbox.scala:241)
+play.api.http.HttpErrorHandlerExceptions$$anon$1: Execution exception[[NoSuchElementException: null]]
+	at play.api.http.HttpErrorHandlerExceptions$.throwableToUsefulException(HttpErrorHandler.scala:351)
+	at play.api.http.DefaultHttpErrorHandler.onServerError(HttpErrorHandler.scala:267)
+	at play.core.server.AkkaHttpServer$$anonfun$1.applyOrElse(AkkaHttpServer.scala:448)
+	at play.core.server.AkkaHttpServer$$anonfun$1.applyOrElse(AkkaHttpServer.scala:446)
+	at scala.concurrent.impl.Promise$Transformation.run(Promise.scala:453)
+	at akka.dispatch.BatchingExecutor$AbstractBatch.processBatch(BatchingExecutor.scala:55)
+	at akka.dispatch.BatchingExecutor$BlockableBatch.$anonfun$run$1(BatchingExecutor.scala:92)
+	at scala.runtime.java8.JFunction0$mcV$sp.apply(JFunction0$mcV$sp.scala:18)
+	at scala.concurrent.BlockContext$.withBlockContext(BlockContext.scala:94)
+	at akka.dispatch.BatchingExecutor$BlockableBatch.run(BatchingExecutor.scala:92)
+	at akka.dispatch.TaskInvocation.run(AbstractDispatcher.scala:41)
+	at akka.dispatch.ForkJoinExecutorConfigurator$AkkaForkJoinTask.exec(ForkJoinExecutorConfigurator.scala:49)
 	at akka.dispatch.forkjoin.ForkJoinTask.doExec(ForkJoinTask.java:260)
 	at akka.dispatch.forkjoin.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1339)
 	at akka.dispatch.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979)
 	at akka.dispatch.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107)
-2019-12-19 16:00:41,614 [WARN] from play.api.http.HttpConfiguration in play-dev-mode-akka.actor.default-dispatcher-130 - 
+Caused by: java.util.NoSuchElementException: null
+	at scala.collection.immutable.BitmapIndexedMapNode.apply(HashMap.scala:604)
+	at scala.collection.immutable.HashMap.apply(HashMap.scala:131)
+	at implicits.CSVTool$CSVLines.$anonfun$selectOneColumn$1(CSVTool.scala:51)
+	at scala.collection.immutable.List.map(List.scala:219)
+	at implicits.CSVTool$CSVLines.selectOneColumn(CSVTool.scala:50)
+	at tool.CompoundFileValidTool.$anonfun$validIntColumn$1(CompoundFileValidTool.scala:74)
+	at scala.collection.immutable.List.map(List.scala:223)
+	at tool.CompoundFileValidTool.validIntColumn(CompoundFileValidTool.scala:73)
+	at tool.CompoundFileValidTool$.$anonfun$valid$7(CompoundFileValidTool.scala:338)
+	at tool.CompoundFileValidTool$.$anonfun$valid$7$adapted(CompoundFileValidTool.scala:337)
+	at cats.data.Validated.andThen(Validated.scala:264)
+	at tool.CompoundFileValidTool$.valid(CompoundFileValidTool.scala:337)
+	at tool.FileTool$.compoundFileCheck(FileTool.scala:29)
+	at tool.FileTool$.fileCheck(FileTool.scala:20)
+	at controllers.MissionController.$anonfun$newMission$1(MissionController.scala:56)
+	at play.api.mvc.ActionBuilderImpl.invokeBlock(Action.scala:489)
+	at play.api.mvc.ActionBuilderImpl.invokeBlock(Action.scala:487)
+	at play.api.mvc.ActionBuilder$$anon$10.apply(Action.scala:426)
+	at play.api.mvc.Action.$anonfun$apply$2(Action.scala:98)
+	at scala.concurrent.impl.Promise$Transformation.run(Promise.scala:433)
+	... 11 common frames omitted
+2019-12-23 18:09:24,571 [WARN] from play.api.http.HttpConfiguration in play-dev-mode-akka.actor.default-dispatcher-175 - 
 The application secret is too short and does not have the recommended amount of entropy.  Your application is not secure
 and it will fail to start in production mode.
 To set the application secret, please read http://playframework.com/documentation/latest/ApplicationSecret
           
-2019-12-19 16:00:41,658 [INFO] from play.api.http.EnabledFilters in play-dev-mode-akka.actor.default-dispatcher-130 - Enabled Filters (see <https://www.playframework.com/documentation/latest/Filters>):
+2019-12-23 18:09:24,612 [INFO] from play.api.http.EnabledFilters in play-dev-mode-akka.actor.default-dispatcher-175 - Enabled Filters (see <https://www.playframework.com/documentation/latest/Filters>):
 
     play.filters.gzip.GzipFilter
 
-2019-12-19 16:00:41,660 [INFO] from play.api.Play in play-dev-mode-akka.actor.default-dispatcher-130 - Application started (Dev) (no global state)
-2019-12-19 16:00:41,662 [WARN] from slick.basic.DatabaseConfig in application-akka.actor.default-dispatcher-8 - Use `profile` instead of `driver`. The latter is deprecated since Slick 3.2 and will be removed.
-2019-12-19 16:02:25,068 [WARN] from akka.actor.ActorSystemImpl in play-dev-mode-akka.actor.default-dispatcher-161 - Explicitly set HTTP header 'Content-Type: application/x-download' is ignored, explicit `Content-Type` header is not allowed. Set `HttpResponse.entity.contentType` instead.
-2019-12-19 16:15:58,668 [WARN] from play.api.http.HttpConfiguration in play-dev-mode-akka.actor.default-dispatcher-229 - 
+2019-12-23 18:09:24,614 [INFO] from play.api.Play in play-dev-mode-akka.actor.default-dispatcher-175 - Application started (Dev) (no global state)
+2019-12-23 18:09:24,614 [WARN] from slick.basic.DatabaseConfig in application-akka.actor.default-dispatcher-5 - Use `profile` instead of `driver`. The latter is deprecated since Slick 3.2 and will be removed.
+2019-12-23 18:11:44,757 [WARN] from play.api.http.HttpConfiguration in play-dev-mode-akka.actor.default-dispatcher-238 - 
 The application secret is too short and does not have the recommended amount of entropy.  Your application is not secure
 and it will fail to start in production mode.
 To set the application secret, please read http://playframework.com/documentation/latest/ApplicationSecret
           
-2019-12-19 16:15:58,712 [INFO] from play.api.http.EnabledFilters in play-dev-mode-akka.actor.default-dispatcher-229 - Enabled Filters (see <https://www.playframework.com/documentation/latest/Filters>):
+2019-12-23 18:11:44,801 [INFO] from play.api.http.EnabledFilters in play-dev-mode-akka.actor.default-dispatcher-238 - Enabled Filters (see <https://www.playframework.com/documentation/latest/Filters>):
 
     play.filters.gzip.GzipFilter
 
-2019-12-19 16:15:58,714 [INFO] from play.api.Play in play-dev-mode-akka.actor.default-dispatcher-229 - Application started (Dev) (no global state)
-2019-12-19 16:15:58,722 [WARN] from slick.basic.DatabaseConfig in application-akka.actor.default-dispatcher-4 - Use `profile` instead of `driver`. The latter is deprecated since Slick 3.2 and will be removed.
+2019-12-23 18:11:44,807 [INFO] from play.api.Play in play-dev-mode-akka.actor.default-dispatcher-238 - Application started (Dev) (no global state)
+2019-12-23 18:11:44,807 [WARN] from slick.basic.DatabaseConfig in application-akka.actor.default-dispatcher-2 - Use `profile` instead of `driver`. The latter is deprecated since Slick 3.2 and will be removed.

@@ -7,18 +7,17 @@ import actors.MissionManageActor
 import akka.actor.{Actor, ActorSystem, PoisonPill, Props}
 import akka.stream.Materializer
 import command.CommandExecutor
-import dao.MissionDao
+import dao.{MissionDao, ModeDao}
 import javax.inject.Inject
 import mission.MissionUtils
 import org.apache.commons.io.FileUtils
 import org.apache.commons.lang3.StringUtils
 import play.api.libs.json.{JsValue, Json}
 import play.api.mvc.{AbstractController, ControllerComponents, WebSocket}
-
 import org.joda.time.DateTime
 import org.zeroturnaround.zip.ZipUtil
 import play.api.libs.streams.ActorFlow
-import tool.{FormTool, Tool, WebTool}
+import tool.{FileTool, FormTool, Tool, WebTool}
 
 import scala.concurrent.duration._
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -40,6 +39,7 @@ import scala.language.postfixOps
 class MissionController @Inject()(cc: ControllerComponents, formTool: FormTool,
                                  )(implicit val system: ActorSystem,
                                    implicit val missionDao: MissionDao,
+                                   implicit val modeDao: ModeDao,
                                    implicit val materializer: Materializer) extends AbstractController(cc) {
 
   val missionManageActor = system.actorOf(
@@ -51,26 +51,29 @@ class MissionController @Inject()(cc: ControllerComponents, formTool: FormTool,
     val threadNum = 2
     val missionName = Tool.generateMissionName
     val data = formTool.missionForm.bindFromRequest().get
-    val row = MissionRow(0, s"${missionName}", data.kind, new DateTime(), None, "preparing", threadNum)
-    missionDao.insert(row).flatMap(_ => missionDao.selectByMissionName(row.missionName)).flatMap { mission =>
-      val outDir = Tool.getUserMissionDir
-      val missionDir = MissionUtils.getMissionDir(mission.id, outDir)
-      val (workspaceDir, resultDir) = (missionDir.workspaceDir, missionDir.resultDir)
-      val file = new File(workspaceDir, "data.zip")
-      WebTool.fileMove("dataFile", file)
-      val sampleConfigExcelFile = new File(workspaceDir, "sample_config.xlsx")
-      WebTool.fileMove("sampleConfigFile", sampleConfigExcelFile)
-      sampleConfigExcelFile.removeEmptyLine
-      val compoundConfigFile = new File(workspaceDir, "compound_config.xlsx")
-      WebTool.fileMove("compoundConfigFile", compoundConfigFile)
-      compoundConfigFile.removeEmptyLine
-      val newMission = mission.copy(state = "wait")
-      missionDao.update(newMission).map { x =>
-        val json = Json.obj("missionId" -> newMission.id, "missionName" -> newMission.missionName)
-        val base64Key = Json.stringify(json).base64Str
-        Ok(Json.obj("valid" -> true, "key" -> base64Key))
+    val tmpDir = Tool.createTempDirectory("tmpDir")
+    val myTmpDir = Tool.getDataDir(tmpDir)
+    val myMessage = FileTool.fileCheck(myTmpDir)
+    if (myMessage.valid) {
+      val row = MissionRow(0, s"${missionName}", data.kind, new DateTime(), None, "preparing", threadNum)
+      missionDao.insert(row).flatMap(_ => missionDao.selectByMissionName(row.missionName)).flatMap { mission =>
+        val outDir = Tool.getUserMissionDir
+        val missionDir = MissionUtils.getMissionDir(mission.id, outDir)
+        val (workspaceDir, resultDir) = (missionDir.workspaceDir, missionDir.resultDir)
+        FileUtils.copyDirectory(myTmpDir.tmpDir, workspaceDir)
+        Tool.deleteDirectory(myTmpDir.tmpDir)
+        val newMission = mission.copy(state = "wait")
+        missionDao.update(newMission).map { x =>
+          val json = Json.obj("missionId" -> newMission.id, "missionName" -> newMission.missionName)
+          val base64Key = Json.stringify(json).base64Str
+          Ok(Json.obj("valid" -> true, "key" -> base64Key))
+        }
       }
+    } else {
+      Tool.deleteDirectory(myTmpDir.tmpDir)
+      Future.successful(Ok(Json.obj("valid" -> myMessage.valid, "message" -> myMessage.message)))
     }
+
 
   }
 
