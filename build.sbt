@@ -41,8 +41,8 @@ lazy val server = (project in file("server")).settings(commonSettings).settings(
     "javax.xml.bind" % "jaxb-api" % "2.3.0",
     "org.apache.commons" % "commons-lang3" % "3.6",
     "org.scala-lang.modules" %% "scala-parallel-collections" % "0.2.0",
-    "org.typelevel" %% "cats-core" % "2.0.0"
-
+    "org.typelevel" %% "cats-core" % "2.0.0",
+    "javax.mail" % "mail" % "1.4.7",
 
   )
 ).enablePlugins(PlayScala).dependsOn(sharedJvm)

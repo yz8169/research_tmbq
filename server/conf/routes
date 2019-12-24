@@ -14,6 +14,9 @@ GET         /tmbq/downloadLog                controllers.MissionController.downl
 GET         /tmbq/getMissionState            controllers.MissionController.getMissionState
 
 
+GET         /tmbq/test                       controllers.TestController.test
+
+
 GET         /javascriptRoutes                controllers.AppController.javascriptRoutes
 
 # Map static resources from the /public folder to the /assets URL path

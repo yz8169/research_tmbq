@@ -26,13 +26,14 @@ import scala.language.postfixOps
 @Singleton
 class MissionManageActor @Inject()()(implicit val system: ActorSystem,
                                      implicit val materializer: Materializer,
-                                     implicit val missionDao: MissionDao,
+                                     implicit val dao: MyDao
 
 ) extends Actor with Timers {
 
   timers.startPeriodicTimer("timer", "ask", 10 seconds)
 
   val availCpu = Tool.availCpu
+  val missionDao = dao.missionDao
 
   missionDao.selectAll("running").map { missions =>
     missions.foreach { mission =>

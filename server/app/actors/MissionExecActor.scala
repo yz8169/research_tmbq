@@ -29,8 +29,10 @@ import org.zeroturnaround.zip.ZipUtil
  */
 class MissionExecActor @Inject()(mission: MissionRow)(implicit val system: ActorSystem,
                                                       implicit val materializer: Materializer,
-                                                      implicit val missionDao: MissionDao,
+                                                      implicit val dao: MyDao
 ) extends Actor {
+  val missionDao = dao.missionDao
+  implicit val configDao = dao.configDao
 
   override def receive: Receive = {
     case "run" =>
@@ -58,7 +60,6 @@ class MissionExecActor @Inject()(mission: MissionRow)(implicit val system: Actor
         }
 
         val rBaseFile = new File(Tool.rPath, "base.R")
-        println(Tool.rPath)
         FileUtils.copyFileToDirectory(rBaseFile, workspaceDir)
 
         val compoundLines = compoundConfigFile.xlsxLines()
@@ -107,17 +108,21 @@ class MissionExecActor @Inject()(mission: MissionRow)(implicit val system: Actor
           "error"
         }
         val newMission = mission.copy(state = state, endTime = Some(new DateTime()))
-        missionDao.update(newMission)
+        missionDao.update(newMission).map { x =>
+          Tool.sendMail(newMission)
+        }
       }.onComplete {
         case Failure(exception) =>
           exception.printStackTrace()
           exception.toString.toFile(logFile)
           val newMission = mission.copy(state = "error", endTime = Some(new DateTime()))
           missionDao.update(newMission).map { x =>
+            Tool.sendMail(newMission)
             self ! "stop"
           }
         case Success(x) => self ! "stop"
       }
+
     case "stop" =>
       self ! PoisonPill
 

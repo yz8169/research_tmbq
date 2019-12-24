@@ -4,7 +4,8 @@ import java.io.{File, FileOutputStream}
 import java.nio.file.Files
 import java.util.concurrent.ForkJoinPool
 
-import dao.ModeDao
+import controllers.routes
+import dao.{ConfigDao, ModeDao}
 import org.apache.commons.io.FileUtils
 import org.joda.time.DateTime
 import utils.Utils
@@ -16,7 +17,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook
 import org.zeroturnaround.zip.ZipUtil
 import play.api.libs.Files.TemporaryFile
 import play.api.libs.json.Json
-import play.api.mvc.{MultipartFormData, Request}
+import play.api.mvc.{MultipartFormData, Request, RequestHeader}
 import tool.Pojo.{CommandData, IndexData, MyDataDir}
 
 import scala.collection.SeqMap
@@ -24,6 +25,7 @@ import scala.collection.parallel.ForkJoinTaskSupport
 import scala.concurrent.Future
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.collection.parallel.CollectionConverters._
+import models.Tables._
 
 /**
  * Created by Administrator on 2019/12/5
@@ -399,7 +401,47 @@ object Tool {
     compoundConfigFile.removeEmptyLine
     val tmpDataDir = new File(dataDir, "tmpData").createDirectoryWhenNoExist
     ZipUtil.unpack(dataFile, tmpDataDir)
-    MyDataDir(dataDir,tmpDataDir,dataFile, sampleConfigFile, compoundConfigFile)
+    MyDataDir(dataDir, tmpDataDir, dataFile, sampleConfigFile, compoundConfigFile)
+  }
+
+  def getKeyByMission(mission: MissionRow) = {
+    val json = Json.obj("missionId" -> mission.id, "missionName" -> mission.missionName)
+    Json.stringify(json).base64Str
+  }
+
+
+  def getRequestHost(implicit configDao: ConfigDao) = {
+    val dbHost = Utils.execFuture(configDao.selectHost).value
+    if (isWindows) {
+      "localhost:9000"
+    } else dbHost
+  }
+
+  def sendMail(mission: MissionRow)(implicit configDao: ConfigDao) = {
+    mission.email.foreach { email =>
+      import EmailTool._
+      val key = Tool.getKeyByMission(mission)
+      val requestHost = Tool.getRequestHost
+      val href = s"http://${requestHost}${routes.MissionController.resultBefore()}?key=${key}"
+      val content =
+        s"""
+           |Your task is completed!<br>
+           |Click to see details:<br>
+           |<a href="${href}">${href}</a><br>
+           |If you can not directly access this link, please copy and paste this link to the browser address bar for access!<br>
+           |If the email was not meant for your, please ignore this email.<br>
+           |<br>
+           |Regards,<br>
+           |Human Metabolomics lnstitute lnc.
+       """.stripMargin
+      val info = Info("Task notification", content)
+      val inbox = email
+      //      val sender = Sender("Human Metabolomics lnstitute lnc.", "smtp.exmail.qq.com", "yinzheng@vgbioteam.com", "Abc1144612652")
+      val sender = Sender("Human Metabolomics lnstitute lnc.", "smtp.exmail.qq.com", "info@hmibiotech.com", "Huiyun1234")
+
+      sendEmailBySsl(sender, info, inbox)
+    }
+
   }
 
 

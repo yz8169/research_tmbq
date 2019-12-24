@@ -88,6 +88,7 @@ class FormTool {
   val missionForm = Form(
     mapping(
       "kind" -> text,
+      "email" -> optional(text)
     )(MissionData.apply)(MissionData.unapply)
   )
 

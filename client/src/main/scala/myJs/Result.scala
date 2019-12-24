@@ -39,7 +39,9 @@ object Result {
       val element = div()(
         span()("Task is Running"),
         " ",
-        img(src := "/assets/images/running2.gif", cls := "runningImg")()
+        img(src := "/assets/images/running2.gif", cls := "runningImg")(),
+        br,
+        span()("If you have filled your email,you can close the window,we will send a message after the task is finieshed!"),
       ).render
       jQuery("#info").html(element)
     } else if (List("error").contains(data("state"))) {

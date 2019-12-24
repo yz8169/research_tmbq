@@ -2,6 +2,7 @@ package tool
 
 import java.io.File
 
+import dao.{ConfigDao, MissionDao}
 import play.api.mvc.RequestHeader
 
 
@@ -32,7 +33,7 @@ object Pojo {
 
   case class IndexData(index: String, compoundName: String)
 
-  case class MissionData(kind: String)
+  case class MissionData(kind: String, email: Option[String])
 
   trait ConfigFileT extends MyDir {
     val configFile: File
@@ -78,6 +79,7 @@ object Pojo {
 
   case class DataFileInfo(sampleIds: List[String])
 
+  case class MyDao(missionDao:MissionDao,configDao:ConfigDao)
 
   trait InDir {
     val dir01: File = new File(".")

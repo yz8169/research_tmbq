@@ -7,7 +7,7 @@ import actors.MissionManageActor
 import akka.actor.{Actor, ActorSystem, PoisonPill, Props}
 import akka.stream.Materializer
 import command.CommandExecutor
-import dao.{MissionDao, ModeDao}
+import dao.{ConfigDao, MissionDao, ModeDao}
 import javax.inject.Inject
 import mission.MissionUtils
 import org.apache.commons.io.FileUtils
@@ -17,6 +17,7 @@ import play.api.mvc.{AbstractController, ControllerComponents, WebSocket}
 import org.joda.time.DateTime
 import org.zeroturnaround.zip.ZipUtil
 import play.api.libs.streams.ActorFlow
+import tool.Pojo.MyDao
 import tool.{FileTool, FormTool, Tool, WebTool}
 
 import scala.concurrent.duration._
@@ -40,7 +41,10 @@ class MissionController @Inject()(cc: ControllerComponents, formTool: FormTool,
                                  )(implicit val system: ActorSystem,
                                    implicit val missionDao: MissionDao,
                                    implicit val modeDao: ModeDao,
+                                   implicit val configDao: ConfigDao,
                                    implicit val materializer: Materializer) extends AbstractController(cc) {
+
+  implicit val dao = MyDao(missionDao, configDao)
 
   val missionManageActor = system.actorOf(
     Props(new MissionManageActor())
@@ -55,7 +59,7 @@ class MissionController @Inject()(cc: ControllerComponents, formTool: FormTool,
     val myTmpDir = Tool.getDataDir(tmpDir)
     val myMessage = FileTool.fileCheck(myTmpDir)
     if (myMessage.valid) {
-      val row = MissionRow(0, s"${missionName}", data.kind, new DateTime(), None, "preparing", threadNum)
+      val row = MissionRow(0, s"${missionName}", data.kind, new DateTime(), None, "preparing", threadNum, data.email)
       missionDao.insert(row).flatMap(_ => missionDao.selectByMissionName(row.missionName)).flatMap { mission =>
         val outDir = Tool.getUserMissionDir
         val missionDir = MissionUtils.getMissionDir(mission.id, outDir)
@@ -64,8 +68,7 @@ class MissionController @Inject()(cc: ControllerComponents, formTool: FormTool,
         Tool.deleteDirectory(myTmpDir.tmpDir)
         val newMission = mission.copy(state = "wait")
         missionDao.update(newMission).map { x =>
-          val json = Json.obj("missionId" -> newMission.id, "missionName" -> newMission.missionName)
-          val base64Key = Json.stringify(json).base64Str
+          val base64Key = Tool.getKeyByMission(newMission)
           Ok(Json.obj("valid" -> true, "key" -> base64Key))
         }
       }
