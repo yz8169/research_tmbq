@@ -1,0 +1,300 @@
+@()(implicit request: play.api.mvc.RequestHeader)
+@main("Manual-TMBQ") {
+	<style>
+			.tdBold {
+				font-weight: bold;
+			}
+
+			.mySpan {
+				font-weight: bold;
+			}
+
+			.bs-docs-sidebar.affix {
+				position: fixed;
+				top: 20px;
+			}
+
+			ul.nav-tabs {
+				width: 140px;
+				margin-top: 20px;
+				border-radius: 4px;
+				border: 1px solid #ddd;
+				box-shadow: 0 1px 4px rgba(0, 0, 0, 0.067);
+			}
+
+			ul.nav-tabs li {
+				margin: 0;
+				border-top: 1px solid #ddd;
+			}
+
+			ul.nav-tabs li:first-child {
+				border-top: none;
+			}
+
+			ul.nav-tabs li a {
+				margin: 0;
+				padding: 8px 16px;
+				border-radius: 0;
+			}
+
+			ul.nav-tabs li.active a, ul.nav-tabs li.active a:hover {
+				color: #fff;
+				background: #0088cc;
+				border: 1px solid #0088cc;
+			}
+
+			ul.nav-tabs li:first-child a {
+				border-radius: 4px 4px 0 0;
+			}
+
+			ul.nav-tabs li:last-child a {
+				border-radius: 0 0 4px 4px;
+			}
+
+			.affix {
+				top: 20px;
+			}
+
+			hr {
+				font-weight: bold;
+			}
+
+			img {
+				max-width: 100%;
+			}
+
+			.bold {
+				font-weight: bold;
+			}
+
+
+	</style>
+
+	<div class="row">
+		<div class="form-group col-sm-12">
+			<h2 class="page-heading"
+			style="text-align: left;
+				border-bottom: 5px solid #e9f3f4">User manual</h2>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-xs-3" id="myScrollspy">
+			<div class="bs-docs-sidebar affix-top" role="complementary">
+				<ul class="nav bs-docs-sidenav" id="myNav">
+					<li class=""><a href="#1">1. Introduction</a></li>
+					<li><a href="#2">2. Workflow and main features</a></li>
+					<li><a href="#3">3. Input files preparation</a></li>
+					<li><a href="#4">4. The Use of TMBQ Webserver</a></li>
+					<li><a href="#5">5. Interpretation of Analysis results</a></li>
+					<li><a href="#6">6. Postscript</a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="col-xs-9" style="line-height: 2em">
+
+			<div class="row" id="1">
+				<div class="col-xs-12">
+					<p class="paragraph bold">
+						1. Introduction
+					</p>
+					<p class="paragraph">
+						Large-scale metabolite quantification is a challenge in targeted metabolomics studies. Targeted Metabolome Batch Quantification (TMBQ) is a web based platform for high throughput and customized targeted metabolites quantification with minimal manual intervention. There are 6 functional modules in the main workflow of TMBQ, including data reading and pretreatment, peak identification, intensity calculation and correction, standard curve fitting, concentration calculation, and results exportation. There are 2 additional modules assisting for key parameters auto-tuning and for unit conversion. Currently, TMBQ only supports UPLC/TQ-MS based targeted metabolomics data acquired from Waters or Agilent corporations. Data formats from more vendors will be supported in the near future.
+					</p>
+				</div>
+			</div>
+
+			<div class="row" id="2">
+				<div class="col-xs-12">
+					<p class="paragraph bold">
+						2. Workflow and main features
+					</p>
+					<p class="paragraph">
+						<img src="@routes.Assets.at("images/work_flow.png")"><br>
+						<b>Main features:</b><br>
+				<ul>
+					<li>
+						Fulfill the connection between raw LC/MS data to concentration matrix;
+					</li>
+					<li>
+						A new algorithm (dynamic range and recursive calibration, DRC) with comprehensive consideration of sample concentration range, goodness of fit, and number of points included;
+					</li>
+					<li>
+						Parameters for peak picking and intensity integral are independent, more accurate;
+					</li>
+					<li>
+						Simple inputs. One data file (.zip) and 2 configuration files (.xls) are required;
+					</li>
+					<li>
+						Results are fully compatible with numerous downstream applications;
+					</li>
+					<li>
+						Support raw data of UPLC-TQ/MS instruments from Agilent and Waters (format conversion by Proteowizard is required);
+					</li>
+					<li>
+						Provide semi-automatic parameters setting function ;
+					</li>
+					<li>
+						Provide unit conversion function;
+					</li>
+					<li>
+						Cluster servers and multithreading technology are employed for high speed (300+ metabolites in 100+ samples, ~ 5 minutes).
+					</li>
+
+				</ul>
+
+					</p>
+				</div>
+			</div>
+
+			<div class="row" id="3">
+				<div class="col-xs-12">
+					<p class="paragraph bold">
+						3. Input files preparation
+					</p>
+					<p class="paragraph">
+						TMBQ requires the import of the following files:<br>
+				<ul style="list-style-type: decimal">
+					<li>
+						A sample list (.xls format),
+					</li>
+					<li>
+						A compound and parameter table (.xls format), and
+					</li>
+					<li>
+						A raw data file (.zip format).
+					</li>
+				</ul>
+					</p>
+					<p class="paragraph">
+						3.1 A sample list<br>
+						A sample list is a list of involved samples with batch index (1, 2, …), raw data file name, sample type (Standard or Analyte), and concentrations of standards. At least one concentration gradient (e.g. Conc A) is required and more than one concentration gradients (maximum 50) are allowed. In each batch, at least 2 standard samples and 1 analyte sample are required.
+						<br><img src="@routes.Assets.at("images/sample_config_file.png")">
+					</p>
+
+					<p class="paragraph">
+						3.2 A compound and parameter table<br>
+						A compound and parameter table is a list of compounds for quantification with detailed processing parameters (one compound per row). The final results depend on the parameters in this file and great efforts are suggested to be devoted to an optimal parameter table. The meanings and allowed values of the parameters are listed below.
+						<br>
+						Missing values are not allowed in the whole table. Duplicated contents are not allowed in column 1 and 2 respectively. The indexes of internal standards should be started by “IS”. The values in columns "ws4pp", "i4pp", "mp4rs", "snr4pp", "nups4pp", "downs4pp", "lp4e", "rp4e", "mp4e", and "function" should be integers larger than zero. The values in columns "ws4pp" and "ws4pa" should be odd numbers. The values of “IS_correction” column should be “none” (do not perform IS correction) or any IS index (consistent to one of the index in column 1). The values of “STD” column should be consistent to the header of column D, E, …. of the sample list file. All the values are case-insensitive.
+						<br>The final generated table should look like:<br>
+						<img src="@routes.Assets.at("images/result.png")">
+					</p>
+
+					<div class="table-responsive" id="tableContent">
+						<table class="display table table-bordered" id="table" data-pagination="true" data-search="true"
+						data-toolbar="#toolbar" data-page-list="[10, 25, 50, 100, all]" data-multiple-search="true"
+						>
+						</table>
+
+					</div>
+
+					<p class="paragraph">
+						3.3 A raw data file
+					</p>
+
+
+					<p class="paragraph">
+						3.3.1 Data format conversion<br>
+						Convert the raw data files (e.g. Water .raw or Agilent .d files) into .txt format using ProteoWizard (version 3.0.6150, <a href="http://proteowizard.sourceforge.net/" target="_blank">
+						http://proteowizard.sourceforge.net/</a>
+						). Please follow the conversion setting as following. The conversion of Waters .raw files can also be done by the company-provided tool “Data bridge” which will be installed automatically together with Masslynx (Waters, US).
+						<br><img src="@routes.Assets.at("images/ms_convert.png")">
+						<br><img src="@routes.Assets.at("images/conversion_progress.png")">
+					</p>
+
+					<p class="paragraph">
+						3.3.2 Data files compression<br>
+						Compress all the converted data files (.txt) in a .zip file. This is the raw data file ready for processing.
+					</p>
+
+
+				</div>
+			</div>
+
+			<div class="row" id="4">
+				<div class="col-xs-12">
+					<p class="paragraph bold">
+						4. The Use of TMBQ Webserver
+					</p>
+					<p class="paragraph">
+						4.1 Registration<br>
+						Please click <a href="http://119.136.25.134:9000/" target="_blank">http://119.136.25.134:9000/</a>
+						 to visit TMBQ webserver. Currently, common web browsers such as IE, Chrome, Edge and Firefox are supported.
+						<br>
+						Registration is required for the first time one use the web server. User name, password, and an active email address should be provided. A notification email when your project is finished will be send to the address you provided here. After registration, one can sign in with the user name.
+					</p>
+					<p class="paragraph">
+						4.2 File upload<br>
+						<img src="@routes.Assets.at("images/new_mission.png")"><br>
+						You can log in again and download the result from the “Project explorer” part later.
+					</p>
+
+				</div>
+			</div>
+
+			<div class="row" id="5">
+				<div class="col-xs-12">
+					<p class="paragraph bold">
+						5. Interpretation of Analysis results
+					</p>
+					<p class="paragraph">
+						The analysis result contains 2 folders and 2 .xls files, named as "plot_peaks", "plot_regress", “concentration.xls”, and "intensity.xls" respectively.
+						<br>
+						The file named “concentration.xls” contains 1) concentrations of every compound in every sample, 2) all the user defined parameters, and 3) R square and formula of calibrated curves, and 4) some simple statistical results (mean, S.D., RSD%, etc). The reliabilities of the sample concentrations are colored. It looks like following.
+						<br>
+						<img src="@routes.Assets.at("images/intensity_1.png")"><br>
+						The file named “intensity.xls” contains intensities of every compound in every sample. It looks like following.
+						<br>
+						<img src="@routes.Assets.at("images/intensity_2.png")"><br>
+						The peaks for every compound are saved in the plot folder, one file per compound. Take the compound sarcosine in sample “sample01” as an example. The raw signal of the target compound (extracted by corresponding function and ion pair), signal after smooth by user defined parameters, and signal used for intensity calculation (integral area is colored in blue) are as following respectively. The basic information and some key parameters are displayed in the figures. Each red dot means a scan point of detection. In the middle figure (the smoothed signal for peak picking), the dot-dash lines in blue are user defined RT window, the red solid lines indicate the rising and ending points of target peak, and the solid black line indicates the summit of the peak.
+						<br>
+						<img src="@routes.Assets.at("images/peak.png")"><br>
+						The fitted curves for every compound of every batch are saved in the plot-regress folder, one file per compound. Take the calibrated curve for sarcosine in batch1 as an example. There will be two figures related to calibration. The first one is the intensity-concentration line chart of all the points (circle) ready for curve fitting. The dot-dash lines indicate the points and range used for final calibration, determined by the <b>
+						Dynamic range and recursive calibration (DRC)</b>
+						algorithm. The second figure is the calibrated standard curve with all samples (cross). The two solid lines indicate the minimum and maximum intensities of samples. The formula, R square, and some parameters are also displayed on the figures.
+						<br>
+						<img src="@routes.Assets.at("images/regress_1.png")"><br>
+						<img src="@routes.Assets.at("images/regress_2.png")">
+					</p>
+				</div>
+			</div>
+
+			<div class="row" id="6">
+				<div class="col-xs-12">
+					<p class="paragraph bold">
+						6. Postscript
+					</p>
+					<p class="paragraph">
+						As far as we know, TMBQ (Targeted Metabolome Batch Quantification) is the first freely available tool designed to fulfill the connection between UPLC/TQ-MS raw data and targeted metabolome quantification. It covers almost all the widely used functions and key parameters provided by existing commercial tools (e.g. TargetLynx and MassHunter). The outputted figures and tables are also similar to them. Therefore, it is not hard for researchers to switch from existing tools to TMBQ. To promote the levels of automation and standardization, interactive modification of compound peaks, integral areas, and sample points involved in standard curves fitting are not supported and two additional functional modules, for key parameters auto-tuning and for unit conversion, are added. Consequently, TMBQ is a good complement to existing tools, especially for large-scale and multi-batch applications and those with high requirements for speed and reproducibility.
+						<br>
+						To improve the quality of standard curves which is crucial for following concentration computation, a new algorithm was used in TMBQ. Cluster servers and multithreading technology are employed. The parameters in the compound list file are crucial to the final result and so deserve great efforts for tuning. This may be the most time consuming step of TMBQ strategy. Once the parameters are determined, only small adjustments of few parameters (e.g. RT) are needed for subsequent analysis unless sample type or analytical protocols are different.
+						<br>
+						While we still face many challenges ahead, ongoing efforts are devoted for performances improvement such as supporting more instrument and data types, designing better algorithm for peak identification and curve fitting, tuning key parameters by machine learning. Bug reports and various suggestions are welcome.
+					</p>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+	<script>
+			$(function () {
+
+				$('body').scrollspy({target: '#myScrollspy'})
+
+				$("#myNav").affix({
+					offset: {
+						top: 100
+					}
+				});
+
+				Manual.init
+
+
+			})
+
+	</script>
+
+
+}

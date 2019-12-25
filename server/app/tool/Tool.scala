@@ -47,6 +47,7 @@ object Tool {
   val testDir = if (windowsTestDir.exists()) windowsTestDir else linuxTestDir
   val exampleDir = new File(path, "example")
   val userDir = new File(path, "user")
+  val dataDir = new File(path, "data")
 
   def getInfoByFile(file: File) = {
     val lines = FileUtils.readLines(file).asScala

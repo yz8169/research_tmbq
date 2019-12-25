@@ -1,8 +1,13 @@
 package controllers
 
+import java.io.File
+
 import javax.inject.Inject
+import play.api.libs.json.Json
 import play.api.mvc.{AbstractController, ControllerComponents}
 import play.api.routing.JavaScriptReverseRouter
+import tool.Tool
+import utils.Utils
 
 /**
  * Created by Administrator on 2019/7/2
@@ -12,6 +17,18 @@ class AppController @Inject()(cc: ControllerComponents) extends AbstractControll
   def toIndex = Action { implicit request =>
     Ok(views.html.index())
   }
+
+  def toManual = Action { implicit request =>
+    Ok(views.html.manual())
+  }
+
+  def getAllArgs = Action { implicit request =>
+    val file = new File(Tool.dataDir, "args.txt")
+    val (columnNames, array) = Utils.getInfoByFile(file)
+    val json = Json.obj("columnNames" -> columnNames, "array" -> array)
+    Ok(json)
+  }
+
 
 
   def javascriptRoutes = Action { implicit request =>
@@ -23,6 +40,8 @@ class AppController @Inject()(cc: ControllerComponents) extends AbstractControll
         controllers.routes.javascript.MissionController.downloadResult,
         controllers.routes.javascript.MissionController.downloadLog,
         controllers.routes.javascript.MissionController.getMissionState,
+
+        controllers.routes.javascript.AppController.getAllArgs,
 
       )
     ).as("text/javascript")

@@ -151,5 +151,21 @@ object Utils {
     new File(dir, subDirName).createDirectoryWhenNoExist
   }
 
+  def getInfoByFile(file: File) = {
+    val lines =file.lines
+    getInfoByLines(lines)
+  }
+
+  def getInfoByLines(lines: List[String]) = {
+    val columnNames = lines.head.split("\t")
+    val array = lines.drop(1).map { line =>
+      val columns = line.split("\t").map { x =>
+        x.replaceAll("^\"", "").replaceAll("\"$", "")
+      }
+      columnNames.zip(columns).toMap
+    }
+    (columnNames, array)
+  }
+
 
 }

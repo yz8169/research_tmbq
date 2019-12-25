@@ -5,6 +5,9 @@
 
 # An example controller showing a sample home page
 GET         /                                controllers.AppController.toIndex
+GET         /tmbq/toManual                   controllers.AppController.toManual
+GET         /tmbq/getAllArgs                 controllers.AppController.getAllArgs
+
 
 POST        /tmbq/newMission                 controllers.MissionController.newMission
 GET         /tmbq/resultBefore               controllers.MissionController.resultBefore

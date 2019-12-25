@@ -1,11 +1,99 @@
-2019-12-24 16:11:19,313 [WARN] from play.api.http.HttpConfiguration in play-dev-mode-akka.actor.default-dispatcher-3 - 
+2019-12-25 09:49:58,845 [WARN] from play.api.http.HttpConfiguration in play-dev-mode-akka.actor.default-dispatcher-2 - 
 The application secret is too short and does not have the recommended amount of entropy.  Your application is not secure
 and it will fail to start in production mode.
 To set the application secret, please read http://playframework.com/documentation/latest/ApplicationSecret
           
-2019-12-24 16:11:20,199 [INFO] from play.api.http.EnabledFilters in play-dev-mode-akka.actor.default-dispatcher-3 - Enabled Filters (see <https://www.playframework.com/documentation/latest/Filters>):
+2019-12-25 09:49:59,098 [INFO] from play.api.http.EnabledFilters in play-dev-mode-akka.actor.default-dispatcher-2 - Enabled Filters (see <https://www.playframework.com/documentation/latest/Filters>):
 
     play.filters.gzip.GzipFilter
 
-2019-12-24 16:11:20,210 [INFO] from play.api.Play in play-dev-mode-akka.actor.default-dispatcher-3 - Application started (Dev) (no global state)
-2019-12-24 16:11:20,227 [WARN] from slick.basic.DatabaseConfig in application-akka.actor.default-dispatcher-4 - Use `profile` instead of `driver`. The latter is deprecated since Slick 3.2 and will be removed.
+2019-12-25 09:49:59,113 [INFO] from play.api.Play in play-dev-mode-akka.actor.default-dispatcher-2 - Application started (Dev) (no global state)
+2019-12-25 09:49:59,128 [WARN] from slick.basic.DatabaseConfig in application-akka.actor.default-dispatcher-6 - Use `profile` instead of `driver`. The latter is deprecated since Slick 3.2 and will be removed.
+2019-12-25 09:50:49,398 [WARN] from play.api.http.HttpConfiguration in play-dev-mode-akka.actor.default-dispatcher-10 - 
+The application secret is too short and does not have the recommended amount of entropy.  Your application is not secure
+and it will fail to start in production mode.
+To set the application secret, please read http://playframework.com/documentation/latest/ApplicationSecret
+          
+2019-12-25 09:50:49,446 [INFO] from play.api.http.EnabledFilters in play-dev-mode-akka.actor.default-dispatcher-10 - Enabled Filters (see <https://www.playframework.com/documentation/latest/Filters>):
+
+    play.filters.gzip.GzipFilter
+
+2019-12-25 09:50:49,448 [INFO] from play.api.Play in play-dev-mode-akka.actor.default-dispatcher-10 - Application started (Dev) (no global state)
+2019-12-25 09:50:49,449 [WARN] from slick.basic.DatabaseConfig in application-akka.actor.default-dispatcher-8 - Use `profile` instead of `driver`. The latter is deprecated since Slick 3.2 and will be removed.
+2019-12-25 09:52:55,412 [WARN] from play.api.http.HttpConfiguration in play-dev-mode-akka.actor.default-dispatcher-67 - 
+The application secret is too short and does not have the recommended amount of entropy.  Your application is not secure
+and it will fail to start in production mode.
+To set the application secret, please read http://playframework.com/documentation/latest/ApplicationSecret
+          
+2019-12-25 09:52:55,445 [INFO] from play.api.http.EnabledFilters in play-dev-mode-akka.actor.default-dispatcher-67 - Enabled Filters (see <https://www.playframework.com/documentation/latest/Filters>):
+
+    play.filters.gzip.GzipFilter
+
+2019-12-25 09:52:55,447 [WARN] from slick.basic.DatabaseConfig in application-akka.actor.default-dispatcher-5 - Use `profile` instead of `driver`. The latter is deprecated since Slick 3.2 and will be removed.
+2019-12-25 09:52:55,452 [INFO] from play.api.Play in play-dev-mode-akka.actor.default-dispatcher-67 - Application started (Dev) (no global state)
+2019-12-25 09:54:53,143 [WARN] from play.api.http.HttpConfiguration in play-dev-mode-akka.actor.default-dispatcher-66 - 
+The application secret is too short and does not have the recommended amount of entropy.  Your application is not secure
+and it will fail to start in production mode.
+To set the application secret, please read http://playframework.com/documentation/latest/ApplicationSecret
+          
+2019-12-25 09:54:53,185 [INFO] from play.api.http.EnabledFilters in play-dev-mode-akka.actor.default-dispatcher-66 - Enabled Filters (see <https://www.playframework.com/documentation/latest/Filters>):
+
+    play.filters.gzip.GzipFilter
+
+2019-12-25 09:54:53,186 [INFO] from play.api.Play in play-dev-mode-akka.actor.default-dispatcher-66 - Application started (Dev) (no global state)
+2019-12-25 09:54:53,186 [WARN] from slick.basic.DatabaseConfig in application-akka.actor.default-dispatcher-7 - Use `profile` instead of `driver`. The latter is deprecated since Slick 3.2 and will be removed.
+2019-12-25 09:56:19,625 [WARN] from play.api.http.HttpConfiguration in play-dev-mode-akka.actor.default-dispatcher-121 - 
+The application secret is too short and does not have the recommended amount of entropy.  Your application is not secure
+and it will fail to start in production mode.
+To set the application secret, please read http://playframework.com/documentation/latest/ApplicationSecret
+          
+2019-12-25 09:56:19,660 [INFO] from play.api.http.EnabledFilters in play-dev-mode-akka.actor.default-dispatcher-121 - Enabled Filters (see <https://www.playframework.com/documentation/latest/Filters>):
+
+    play.filters.gzip.GzipFilter
+
+2019-12-25 09:56:19,661 [INFO] from play.api.Play in play-dev-mode-akka.actor.default-dispatcher-121 - Application started (Dev) (no global state)
+2019-12-25 09:56:19,666 [WARN] from slick.basic.DatabaseConfig in application-akka.actor.default-dispatcher-2 - Use `profile` instead of `driver`. The latter is deprecated since Slick 3.2 and will be removed.
+2019-12-25 10:05:28,298 [WARN] from play.api.http.HttpConfiguration in play-dev-mode-akka.actor.default-dispatcher-155 - 
+The application secret is too short and does not have the recommended amount of entropy.  Your application is not secure
+and it will fail to start in production mode.
+To set the application secret, please read http://playframework.com/documentation/latest/ApplicationSecret
+          
+2019-12-25 10:05:28,343 [INFO] from play.api.http.EnabledFilters in play-dev-mode-akka.actor.default-dispatcher-155 - Enabled Filters (see <https://www.playframework.com/documentation/latest/Filters>):
+
+    play.filters.gzip.GzipFilter
+
+2019-12-25 10:05:28,344 [INFO] from play.api.Play in play-dev-mode-akka.actor.default-dispatcher-155 - Application started (Dev) (no global state)
+2019-12-25 10:05:28,348 [WARN] from slick.basic.DatabaseConfig in application-akka.actor.default-dispatcher-8 - Use `profile` instead of `driver`. The latter is deprecated since Slick 3.2 and will be removed.
+2019-12-25 10:06:53,646 [WARN] from play.api.http.HttpConfiguration in play-dev-mode-akka.actor.default-dispatcher-177 - 
+The application secret is too short and does not have the recommended amount of entropy.  Your application is not secure
+and it will fail to start in production mode.
+To set the application secret, please read http://playframework.com/documentation/latest/ApplicationSecret
+          
+2019-12-25 10:06:53,679 [INFO] from play.api.http.EnabledFilters in play-dev-mode-akka.actor.default-dispatcher-177 - Enabled Filters (see <https://www.playframework.com/documentation/latest/Filters>):
+
+    play.filters.gzip.GzipFilter
+
+2019-12-25 10:06:53,681 [INFO] from play.api.Play in play-dev-mode-akka.actor.default-dispatcher-177 - Application started (Dev) (no global state)
+2019-12-25 10:06:53,688 [WARN] from slick.basic.DatabaseConfig in application-akka.actor.default-dispatcher-8 - Use `profile` instead of `driver`. The latter is deprecated since Slick 3.2 and will be removed.
+2019-12-25 10:07:19,343 [WARN] from play.api.http.HttpConfiguration in play-dev-mode-akka.actor.default-dispatcher-179 - 
+The application secret is too short and does not have the recommended amount of entropy.  Your application is not secure
+and it will fail to start in production mode.
+To set the application secret, please read http://playframework.com/documentation/latest/ApplicationSecret
+          
+2019-12-25 10:07:19,379 [INFO] from play.api.http.EnabledFilters in play-dev-mode-akka.actor.default-dispatcher-179 - Enabled Filters (see <https://www.playframework.com/documentation/latest/Filters>):
+
+    play.filters.gzip.GzipFilter
+
+2019-12-25 10:07:19,380 [INFO] from play.api.Play in play-dev-mode-akka.actor.default-dispatcher-179 - Application started (Dev) (no global state)
+2019-12-25 10:07:19,383 [WARN] from slick.basic.DatabaseConfig in application-akka.actor.default-dispatcher-2 - Use `profile` instead of `driver`. The latter is deprecated since Slick 3.2 and will be removed.
+2019-12-25 10:08:07,771 [WARN] from play.api.http.HttpConfiguration in play-dev-mode-akka.actor.default-dispatcher-181 - 
+The application secret is too short and does not have the recommended amount of entropy.  Your application is not secure
+and it will fail to start in production mode.
+To set the application secret, please read http://playframework.com/documentation/latest/ApplicationSecret
+          
+2019-12-25 10:08:07,807 [INFO] from play.api.http.EnabledFilters in play-dev-mode-akka.actor.default-dispatcher-181 - Enabled Filters (see <https://www.playframework.com/documentation/latest/Filters>):
+
+    play.filters.gzip.GzipFilter
+
+2019-12-25 10:08:07,809 [INFO] from play.api.Play in play-dev-mode-akka.actor.default-dispatcher-181 - Application started (Dev) (no global state)
+2019-12-25 10:08:07,811 [WARN] from slick.basic.DatabaseConfig in application-akka.actor.default-dispatcher-2 - Use `profile` instead of `driver`. The latter is deprecated since Slick 3.2 and will be removed.
