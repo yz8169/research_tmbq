@@ -7,6 +7,7 @@
 GET         /                                controllers.AppController.toIndex
 GET         /tmbq/toManual                   controllers.AppController.toManual
 GET         /tmbq/getAllArgs                 controllers.AppController.getAllArgs
+GET         /tmbq/downloadExampleData                 controllers.AppController.downloadExampleData
 
 
 POST        /tmbq/newMission                 controllers.MissionController.newMission

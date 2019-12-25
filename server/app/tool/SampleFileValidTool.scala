@@ -17,25 +17,23 @@ class SampleFileValidTool(lines: List[List[String]]) {
   val factorMap = Map(
     "sample type" -> List("standard", "analyte")
   )
-  val fileInfo="Sample info config file "
+  val fileInfo = "sample info config file "
 
   def validHeadersRepeat = {
     val repeatHeaders = headers.diff(headers.distinct)
     val valid = repeatHeaders.nonEmpty
-    Validated.cond(!valid, true, s"${fileInfo}表头 ${repeatHeaders.head} 重复!")
+    Validated.cond(!valid, true, s"${fileInfo} header ${repeatHeaders.head} is repeated!")
   }
 
   def validHeadersSize = {
     val valid = headers.size < 4
-    Validated.cond(!valid, true, s"${fileInfo}列数必须大于等于4!")
+    Validated.cond(!valid, true, s"The column number of ${fileInfo} must be greater than or equal four!")
   }
 
   def validHeadersExist = {
     val noExistHeaders = hasHeaders.diff(headers)
-    println(hasHeaders)
-    println(headers)
     val valid = noExistHeaders.isEmpty
-    Validated.cond(valid, true, s"${fileInfo}表头 ${noExistHeaders.head} 不存在!")
+    Validated.cond(valid, true, s"${fileInfo} header ${noExistHeaders.head} is not exist!")
   }
 
   def validColumnsRepeat = {
@@ -47,7 +45,7 @@ class SampleFileValidTool(lines: List[List[String]]) {
         val repeatValue = repeatValues.head
         val j = headers.indexOf(header)
         val i = totalColumns.lastIndexOf(repeatValue)
-        s"${fileInfo}第${i + 2}行第${j + 1}列重复!"
+        s"${fileInfo} value is repeated in ${i + 2}th row,${j + 1}th column!"
       } else ""
       (inValid, inMessage)
     }
@@ -68,7 +66,7 @@ class SampleFileValidTool(lines: List[List[String]]) {
         val value = op.get
         val j = headers.indexOf(header)
         val i = totalColumns.lastIndexOf(value)
-        s"${fileInfo}第${i + 2}行第${j + 1}列只能为(${factorMap(header).mkString("、")})中的一个!"
+        s"${fileInfo} value must be one of ${factorMap(header).mkString("、")} in ${i + 2}th row,${j + 1}th column!"
       } else ""
       (inValid, inMessage)
     }
@@ -82,7 +80,7 @@ class SampleFileValidTool(lines: List[List[String]]) {
       val columns = tmpColumns
       val inValid = columns.size > headers.size
       val inMessage = if (inValid) {
-        s"${fileInfo}第${i + 2}行列数不正确,存在多余列!"
+        s"${fileInfo} column number is overmuch in ${i + 2}th row!"
       } else ""
       (!inValid, inMessage)
     }
@@ -100,7 +98,7 @@ class SampleFileValidTool(lines: List[List[String]]) {
       val value = op.get
       val j = headers.indexOf(header)
       val i = totalColumns.lastIndexOf(value)
-      s"${fileInfo}第${i + 2}行第${j + 1}列文件名不存在!"
+      s"${fileInfo} value is not valid file name in ${i + 2}th row ${j + 1}th column!"
     } else ""
     Validated.cond(inValid, true, inMessage)
   }
@@ -113,7 +111,7 @@ class SampleFileValidTool(lines: List[List[String]]) {
       }.headOption
       val inMessage = if (op.nonEmpty) {
         val j = columns.indexOf(op.get)
-        s"${fileInfo}第${i + 2}行第${j + 1}列为空!"
+        s"${fileInfo} value is empty in ${i + 2}th row ${j + 1}th column!"
       } else ""
       (op.isEmpty, inMessage)
     }
@@ -138,9 +136,9 @@ class SampleFileValidTool(lines: List[List[String]]) {
       val b2 = analytes.size < 1
       val j = headers.indexOf(header)
       val inMessage = if (b1) {
-        s"${fileInfo}batch${batch}标样不够(至少两个)!"
+        s"${fileInfo} batch ${batch} must have at least 2 standard samples!"
       } else if (b2) {
-        s"${fileInfo}batch${batch}待测样不够(至少1个)!"
+        s"${fileInfo} batch ${batch} must have at least 1 analyte sample!"
       } else ""
       (!b1 && !b2, inMessage)
     }

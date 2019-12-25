@@ -6,13 +6,14 @@ import javax.inject.Inject
 import play.api.libs.json.Json
 import play.api.mvc.{AbstractController, ControllerComponents}
 import play.api.routing.JavaScriptReverseRouter
-import tool.Tool
+import tool.{FormTool, Tool}
 import utils.Utils
+import scala.concurrent.ExecutionContext.Implicits.global
 
 /**
  * Created by Administrator on 2019/7/2
  */
-class AppController @Inject()(cc: ControllerComponents) extends AbstractController(cc) {
+class AppController @Inject()(cc: ControllerComponents,formTool:FormTool) extends AbstractController(cc) {
 
   def toIndex = Action { implicit request =>
     Ok(views.html.index())
@@ -29,6 +30,19 @@ class AppController @Inject()(cc: ControllerComponents) extends AbstractControll
     Ok(json)
   }
 
+  def downloadExampleData = Action {
+    implicit request =>
+      val data = formTool.fileNameForm.bindFromRequest().get
+      val exampleDir = Tool.exampleDir
+      val resultFile = new File(exampleDir, data.fileName)
+      Ok.sendFile(resultFile).withHeaders(
+        CONTENT_DISPOSITION -> s"attachment; filename=${
+          resultFile.getName
+        }",
+        CONTENT_TYPE -> "application/x-download"
+      )
+  }
+
 
 
   def javascriptRoutes = Action { implicit request =>
@@ -42,6 +56,7 @@ class AppController @Inject()(cc: ControllerComponents) extends AbstractControll
         controllers.routes.javascript.MissionController.getMissionState,
 
         controllers.routes.javascript.AppController.getAllArgs,
+        controllers.routes.javascript.AppController.downloadExampleData,
 
       )
     ).as("text/javascript")

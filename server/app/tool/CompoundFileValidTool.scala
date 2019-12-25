@@ -16,17 +16,18 @@ class CompoundFileValidTool(lines: List[List[String]]) {
     "lod", "loq", "nups4pp", "ndowns4pp", "ws4pa", "lp4e", "rp4e", "mp4e", "bline", "rmode", "rmis", "rmratio")
   val intHeaders = List("ws4pp", "i4pp", "mp4rs", "snr4pp", "nups4pp", "ndowns4pp", "lp4e", "rp4e", "mp4e",
     "function")
+  val fileInfo = "compound info config file"
 
   def validHeadersRepeat = {
     val repeatHeaders = headers.diff(headers.distinct)
     val valid = repeatHeaders.isEmpty
-    Validated.cond(valid, true, s"物质信息配置文件表头 ${repeatHeaders.head} 重复!")
+    Validated.cond(valid, true, s"${fileInfo} header ${repeatHeaders.head} is repeated!")
   }
 
   def validHeadersExist = {
     val noExistHeaders = hasHeaders.diff(headers)
     val valid = noExistHeaders.isEmpty
-    Validated.cond(valid, true, s"物质信息配置文件表头 ${noExistHeaders.head} 不存在!")
+    Validated.cond(valid, true, s"${fileInfo} header ${noExistHeaders.head} is not exist!")
   }
 
   def validColumnsRepeat = {
@@ -39,7 +40,7 @@ class CompoundFileValidTool(lines: List[List[String]]) {
         val repeatValue = repeatValues.head
         val j = headers.indexOf(header)
         val i = totalColumns.lastIndexOf(repeatValue)
-        s"物质信息配置文件第${i + 2}行第${j + 1}列重复!"
+        s"${fileInfo} value is repeated in ${i + 2}th row,${j + 1}th column!"
       } else ""
       (inValid, inMessage)
     }
@@ -60,7 +61,7 @@ class CompoundFileValidTool(lines: List[List[String]]) {
         val value = op.get
         val j = headers.indexOf(header)
         val i = totalColumns.lastIndexOf(value)
-        s"物质信息配置文件第${i + 2}行第${j + 1}列必须为奇数!"
+        s"${fileInfo} value must be odd numbers in ${i + 2}th row,${j + 1}th column!"
       } else ""
       (inValid, inMessage)
     }
@@ -80,7 +81,7 @@ class CompoundFileValidTool(lines: List[List[String]]) {
         val value = op.get
         val j = headers.indexOf(header)
         val i = totalColumns.lastIndexOf(value)
-        s"物质信息配置文件第${i + 2}行第${j + 1}列必须为自然数!"
+        s"${fileInfo} value must be natural numbers in ${i + 2}th row,${j + 1}th column!"
       } else ""
       (inValid, inMessage)
     }
@@ -101,7 +102,7 @@ class CompoundFileValidTool(lines: List[List[String]]) {
         val value = op.get
         val j = headers.indexOf(header)
         val i = totalColumns.lastIndexOf(value)
-        s"物质信息配置文件第${i + 2}行第${j + 1}列必须为实数!"
+        s"${fileInfo} value must be real number in ${i + 2}th row,${j + 1}th column!"
       } else ""
       (inValid, inMessage)
     }
@@ -129,7 +130,7 @@ class CompoundFileValidTool(lines: List[List[String]]) {
         val value = op.get
         val j = headers.indexOf(header)
         val i = totalColumns.lastIndexOf(value)
-        s"物质信息配置文件第${i + 2}行第${j + 1}列只能为(${factorMap(header).mkString("、")})中的一个!"
+        s"${fileInfo} value must be one of ${factorMap(header).mkString("、")} in ${i + 2}th row,${j + 1}th column!"
       } else ""
       (inValid, inMessage)
     }
@@ -143,7 +144,7 @@ class CompoundFileValidTool(lines: List[List[String]]) {
       val columns = tmpColumns
       val inValid = columns.size <= headers.size
       val inMessage = if (!inValid) {
-        s"物质信息配置文件第${i + 2}行列数不正确,存在多余列!"
+        s"${fileInfo} column number is overmuch in ${i + 2}th row!"
       } else ""
       (inValid, inMessage)
     }
@@ -158,7 +159,7 @@ class CompoundFileValidTool(lines: List[List[String]]) {
       val lineMap = headers.zip(columns).toMap
       val inValid = lineMap("mp4rs").toDouble > lineMap("mp4e").toDouble
       val inMessage = if (inValid) {
-        s"物质信息配置文件第${i + 2}行mp4e必须大于等于mp4rs!"
+        s"${fileInfo} mp4e value must be larger than mp4rs value in ${i + 2}th row!"
       } else ""
       (!inValid, inMessage)
     }
@@ -177,7 +178,7 @@ class CompoundFileValidTool(lines: List[List[String]]) {
       val value = op.get
       val j = headers.indexOf(header)
       val i = totalColumns.lastIndexOf(value)
-      s"物质信息配置文件第${i + 2}行第${j + 1}列出现特殊字符!"
+      s"${fileInfo} value must not be special characters in ${i + 2}th row,${j + 1}th column!"
     } else ""
     Validated.cond(inValid, true, inMessage)
   }
@@ -194,7 +195,7 @@ class CompoundFileValidTool(lines: List[List[String]]) {
       val value = op.get
       val j = headers.indexOf(header)
       val i = totalColumns.lastIndexOf(value)
-      s"物质信息配置文件第${i + 2}行第${j + 1}列必须为实数或以'>'分隔的两个实数!"
+      s"${fileInfo} value must be real number or a positive real number pair connected by the greater-than sign in ${i + 2}th row,${j + 1}th column!"
     } else ""
     Validated.cond(inValid, true, inMessage)
   }
@@ -215,7 +216,7 @@ class CompoundFileValidTool(lines: List[List[String]]) {
       val value = op.get
       val j = headers.indexOf(header)
       val i = totalColumns.lastIndexOf(value)
-      s"物质信息配置文件第${i + 2}行第${j + 1}列必须为none或者某个存在的内标化合物的index列名称!"
+      s"""${fileInfo.capitalize} value must be "none" or the specific index of an IS (started by IS) if IS correction is required in ${i + 2}th row,${j + 1}th column!"""
     } else ""
     Validated.cond(inValid, true, inMessage)
   }
@@ -231,7 +232,7 @@ class CompoundFileValidTool(lines: List[List[String]]) {
       val value = op.get
       val j = headers.indexOf(header)
       val i = totalColumns.lastIndexOf(value)
-      s"物质信息配置文件第${i + 2}行第${j + 1}列必须为0-1之间的实数!"
+      s"${fileInfo} value must be a real number in the range of 0-1 in ${i + 2}th row,${j + 1}th column!"
     } else ""
     Validated.cond(inValid, true, inMessage)
   }
@@ -250,7 +251,7 @@ class CompoundFileValidTool(lines: List[List[String]]) {
       val b = lineMap("rmode") == "yes" && !(indexs.contains(column))
       val inMessage = if (b) {
         val j = headers.indexOf(header)
-        s"物质信息配置文件第${i + 2}行第${j + 1}列必须为某个存在的内标化合物的index列名称!"
+        s"${fileInfo} value must be the specific index of an existential IS in ${i + 2}th row,${j + 1}th column!"
       } else ""
       (!b, inMessage)
     }
@@ -267,7 +268,7 @@ class CompoundFileValidTool(lines: List[List[String]]) {
       }.headOption
       val inMessage = if (op.nonEmpty) {
         val j = columns.indexOf(op.get)
-        s"物质信息配置文件第${i + 2}行第${j + 1}列为空!"
+        s"${fileInfo} value must not be empty in ${i + 2}th row ${j + 1}th column!"
       } else ""
       (op.isEmpty, inMessage)
     }
@@ -285,7 +286,7 @@ class CompoundFileValidTool(lines: List[List[String]]) {
       val b = lineMap("rmode") == "yes" && !(column == "none" || column.isDouble)
       val inMessage = if (b) {
         val j = headers.indexOf(header)
-        s"物质信息配置文件第${i + 2}行第${j + 1}列必须为实数!"
+        s"${fileInfo} value must be real number in ${i + 2}th row,${j + 1}th column!"
       } else ""
       (!b, inMessage)
     }
@@ -304,9 +305,9 @@ class CompoundFileValidTool(lines: List[List[String]]) {
       val b2 = (lineMap("index").startsWith("is") && !column.isDouble)
       val j = headers.indexOf(header)
       val inMessage = if (b1) {
-        s"物质信息配置文件第${i + 2}行第${j + 1}列浓度信息在样品信息配置表中不存在!"
+        s"${fileInfo} value must be exist in sample config info file in ${i + 2}th row,${j + 1}th column!"
       } else if (b2) {
-        s"物质信息配置文件第${i + 2}行第${j + 1}列，因为此样品为内标化合物，所以必须为实数!"
+        s"${fileInfo} value must be real number because the sample is standard sample in ${i + 2}th row,${j + 1}th column!"
       } else ""
       (!b1 && !b2, inMessage)
     }

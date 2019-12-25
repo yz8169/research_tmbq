@@ -17,7 +17,7 @@
 				<div class="form-group">
 					<label class="control-label col-sm-2">Metabolic platform:</label>
 					<div class="col-sm-4">
-						<select class="form-control" name="kind">
+						<select class="form-control" name="kind" onchange="Mission.kindChange(this)">
 							<option value="waters">Waters UPLC</option>
 							<option value="agilent">Agilent  TQ-MS</option>
 
@@ -31,6 +31,8 @@
 						<input type="file" class="file control-label" name="dataFile"
 						data-show-preview="false" accept=".zip"
 						data-show-upload="false" >
+						<span class="help-block"><a id="dataFileA" href=""><em>
+							Example file</em></a></span>
 					</div>
 				</div>
 
@@ -40,6 +42,8 @@
 						<input type="file" class="file control-label" name="sampleConfigFile"
 						data-show-preview="false" accept=".xlsx"
 						data-show-upload="false" >
+						<span class="help-block"><a id="sampleFileA" href=""><em>
+							Example file</em></a></span>
 					</div>
 				</div>
 
@@ -49,6 +53,8 @@
 						<input type="file" class="file control-label" name="compoundConfigFile"
 						data-show-preview="false" accept=".xlsx"
 						data-show-upload="false" >
+						<span class="help-block"><a id="compoundFileA" href=""><em>
+							Example file</em></a></span>
 					</div>
 				</div>
 

@@ -16,6 +16,7 @@ import scalajs.js.JSConverters._
 import org.scalajs.dom._
 import org.scalajs.jquery.jQuery
 import org.scalajs.jquery.JQueryAjaxSettings
+import myJs.myPkg.jquery.jquery._
 
 @JSExportTopLevel("Mission")
 object Mission {
@@ -24,7 +25,22 @@ object Mission {
   def init = {
 
     bootStrapValidator
+    kindChangeByValue("waters")
 
+  }
+
+  @JSExport("kindChange")
+  def kindChange(y: Element) = {
+    val myValue = $(y).find(">option:selected").`val`().toString
+    kindChangeByValue(myValue)
+  }
+
+  def kindChangeByValue(myValue: String) = {
+    val url = g.jsRoutes.controllers.AppController.downloadExampleData().url.toString
+    val filePrefix = myValue
+    $("#dataFileA").attr("href", s"${url}?fileName=${filePrefix}_data.zip")
+    $("#sampleFileA").attr("href", s"${url}?fileName=${filePrefix}_sample_config.xlsx")
+    $("#compoundFileA").attr("href", s"${url}?fileName=${filePrefix}_compound_config.xlsx")
   }
 
   @JSExport("myRun")
