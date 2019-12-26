@@ -3,7 +3,7 @@ package controllers
 import java.io.File
 import java.net.URLEncoder
 
-import actors.MissionManageActor
+import actors.{MissionActor, MissionManageActor}
 import akka.actor.{Actor, ActorSystem, PoisonPill, Props}
 import akka.stream.Materializer
 import command.CommandExecutor
@@ -46,13 +46,13 @@ class MissionController @Inject()(cc: ControllerComponents, formTool: FormTool,
 
   implicit val dao = MyDao(missionDao, configDao)
 
-  val missionManageActor = system.actorOf(
-    Props(new MissionManageActor())
+  val missionActor = system.actorOf(
+    Props(new MissionActor())
   )
-  missionManageActor ! "ask"
+  missionActor ! "start"
 
   def newMission = Action.async(parse.multipartFormData) { implicit request =>
-    val threadNum = 2
+    val threadNum = Tool.getMissionDefaultThreadNum
     val missionName = Tool.generateMissionName
     val data = formTool.missionForm.bindFromRequest().get
     val tmpDir = Tool.createTempDirectory("tmpDir")
@@ -95,12 +95,18 @@ class MissionController @Inject()(cc: ControllerComponents, formTool: FormTool,
             val missionId = Tool.getMissionIdByKey(key)
             system.scheduler.scheduleOnce(0 seconds, self, MissionAction(missionId, "update"))
           case MissionAction(missionId, action) =>
-            missionDao.selectByMissionId(missionId).map {
-              mission =>
-                out ! Json.obj("state" -> mission.state)
-                if (!List("success", "error").contains(mission.state)) {
-                  system.scheduler.scheduleOnce(3 seconds, self, MissionAction(missionId, "update"))
+            missionDao.selectByMissionIdOp(missionId).map {
+              missionOp =>
+                missionOp match {
+                  case Some(mission) =>
+                    out ! Json.obj("state" -> mission.state)
+                    if (!List("success", "error").contains(mission.state)) {
+                      system.scheduler.scheduleOnce(3 seconds, self, MissionAction(missionId, "update"))
+                    }
+                  case None => out ! Json.obj("state" -> "deleted")
+
                 }
+
             }
           case _ =>
             self ! PoisonPill

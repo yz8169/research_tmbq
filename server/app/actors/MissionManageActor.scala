@@ -31,6 +31,7 @@ class MissionManageActor @Inject()()(implicit val system: ActorSystem,
 ) extends Actor with Timers {
 
   timers.startPeriodicTimer("timer", "ask", 10 seconds)
+  implicit val configDao = dao.configDao
 
   val availCpu = Tool.availCpu
   val missionDao = dao.missionDao
@@ -49,7 +50,8 @@ class MissionManageActor @Inject()()(implicit val system: ActorSystem,
         val remainCpu = availCpu - totalUseCpu
         missionDao.selectAll("wait").map { totalMissions =>
           val canRunMissions = totalMissions.filter(_.cpu <= remainCpu).sortBy(_.startTime.getMillis)
-          if (!canRunMissions.isEmpty) {
+          val parallelMissionNum = Tool.getMissionDefaultParalleNum
+          if (!canRunMissions.isEmpty && missions.size < parallelMissionNum) {
             val mission = canRunMissions(0)
             val missionActor = context.actorOf(
               Props(new MissionExecActor(mission))

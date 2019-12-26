@@ -400,7 +400,7 @@ object Tool {
     val compoundConfigFile = new File(dataDir, "compound_config.xlsx")
     WebTool.fileMove("compoundConfigFile", compoundConfigFile)
     compoundConfigFile.removeEmptyLine
-    val tmpDataDir = new File(dataDir, "tmpData").createDirectoryWhenNoExist
+    val tmpDataDir = new File(dataDir, "tmpData").reCreateDirectoryWhenExist
     ZipUtil.unpack(dataFile, tmpDataDir)
     MyDataDir(dataDir, tmpDataDir, dataFile, sampleConfigFile, compoundConfigFile)
   }
@@ -416,6 +416,18 @@ object Tool {
     if (isWindows) {
       "localhost:9000"
     } else dbHost
+  }
+
+  def getMissionDefaultThreadNum(implicit configDao: ConfigDao) = {
+    Utils.execFuture(configDao.selectThreadNum).value.toInt
+  }
+
+  def getMissionDefaultParalleNum(implicit configDao: ConfigDao) = {
+    Utils.execFuture(configDao.selectParalleNum).value.toInt
+  }
+
+  def getSaveDays(implicit configDao: ConfigDao) = {
+    Utils.execFuture(configDao.selectSaveDay).value.toInt
   }
 
   def sendMail(mission: MissionRow)(implicit configDao: ConfigDao) = {

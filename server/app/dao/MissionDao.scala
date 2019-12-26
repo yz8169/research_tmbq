@@ -14,8 +14,8 @@ import scala.concurrent.Future
 import scala.concurrent.ExecutionContext.Implicits.global
 
 /**
-  * Created by yz on 2018/4/27
-  */
+ * Created by yz on 2018/4/27
+ */
 class MissionDao @Inject()(protected val dbConfigProvider: DatabaseConfigProvider) extends
   HasDatabaseConfigProvider[JdbcProfile] {
 
@@ -29,14 +29,18 @@ class MissionDao @Inject()(protected val dbConfigProvider: DatabaseConfigProvide
 
   def selectByMissionId(missionId: Int): Future[MissionRow] = db.run(Mission.filter(_.id === missionId).result.head)
 
+  def selectByMissionIdOp(missionId: Int) = db.run(Mission.filter(_.id === missionId).result.headOption)
+
   def update(row: MissionRow): Future[Unit] = db.run(Mission.filter(_.id === row.id).update(row)).map(_ => ())
 
-  def selectAll(userId: Int): Future[Seq[MissionRow]] = db.run(Mission.sortBy(_.id.desc).result)
+  def selectAll: Future[Seq[MissionRow]] = db.run(Mission.sortBy(_.id.desc).result)
 
   def selectAll(state: String): Future[Seq[MissionRow]] = db.run(Mission.
-    filter(x =>x.state === state).sortBy(_.id.desc).result)
+    filter(x => x.state === state).sortBy(_.id.desc).result)
 
   def deleteById(id: Int): Future[Unit] = db.run(Mission.filter(_.id === id).delete).map(_ => ())
+
+  def deleteAll(ids: Seq[Int]) = db.run(Mission.filter(_.id.inSetBind(ids)).delete).map(_ => ())
 
   def deleteByUserId(userId: Int): Future[Unit] = db.run(Mission.delete).map(_ => ())
 

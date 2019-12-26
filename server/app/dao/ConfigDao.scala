@@ -15,5 +15,11 @@ class ConfigDao @Inject()(protected val dbConfigProvider: DatabaseConfigProvider
 
   def selectHost = db.run(Config.filter(_.kind === "host").result.head)
 
+  def selectThreadNum = db.run(Config.filter(_.kind === "thread").result.head)
+
+  def selectParalleNum = db.run(Config.filter(_.kind === "parallel").result.head)
+
+  def selectSaveDay = db.run(Config.filter(_.kind === "save.day").result.head)
+
 
 }

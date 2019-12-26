@@ -65,7 +65,7 @@ object Utils {
         val newPercent = BigDecimal(percent).setScale(2, RoundingMode.HALF_UP)
         jQuery("#progress").html(s"(${newPercent}%)")
         if (percent >= 100) {
-          jQuery("#info").text("正在运行")
+          jQuery("#info").text("Running...")
           jQuery("#progress").html("")
         }
       }

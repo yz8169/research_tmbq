@@ -14,15 +14,27 @@ import org.scalajs.dom._
 import implicits.Implicits._
 import myJs.myPkg.jquery.{JQueryAjaxSettings, JQueryXHR}
 import myJs.myPkg.jquery.jquery._
+import scala.concurrent.ExecutionContext.Implicits.global
+import js.timers
+
+
+import scala.concurrent.Promise
 
 @JSExportTopLevel("Result")
 object Result {
 
   @JSExport("init")
   def init(key: String) = {
-    updateMissionSocket(key)
 
+    $.ajaxSetup(JQueryAjaxSettings.cache(false))
+
+    updateMission(key)
   }
+
+  def updateMission(key: String) = {
+    updateMissionSocket(key)
+  }
+
 
   def updateMissionSocket(key: String) = {
     val url = g.jsRoutes.controllers.MissionController.updateMissionSocket().url.toString
@@ -41,14 +53,18 @@ object Result {
         " ",
         img(src := "/assets/images/running2.gif", cls := "runningImg")(),
         br,
-        span()("If you have filled your email,you can close the window,we will send a message after the task is finieshed!"),
+        span()("If you have filled your email,you can close the window,we will send a message after the task is finished!"),
       ).render
       jQuery("#info").html(element)
     } else if (List("error").contains(data("state"))) {
       jQuery("#info").html("Task is failed!")
       val url = s"${g.jsRoutes.controllers.MissionController.downloadLog().url.toString}?key=${key}"
       window.redirect(url)
+    } else if (List("deleted").contains(data("state"))) {
+      jQuery("#info").html("Task has been cleaned up!")
     }
+    val isContinue = List("running", "wait").contains(data("state"))
+    isContinue
   }
 
   def webSocket(wsUri: String, key: String) = {
@@ -69,19 +85,21 @@ object Result {
   }
 
   def updateByHand(key: String) = {
-    js.timers.setInterval(3000) {
-      refreshMission(key)
-    }
+    refreshMission(key)
   }
 
   @JSExport("refreshMission")
-  def refreshMission(key: String, f: () => Any = () => ()) = {
+  def refreshMission(key: String): JQueryXHR = {
     val url = g.jsRoutes.controllers.MissionController.getMissionState().url.toString
     val ajaxSettings = JQueryAjaxSettings.url(s"${url}?key=${key}").contentType("application/json").
       `type`("get").success { (data: js.Any, status: String, e: JQueryXHR) =>
       val rs = data.asInstanceOf[js.Dictionary[String]]
-      dealMessage(rs, key)
-      f()
+      val isContinue = dealMessage(rs, key)
+      if (isContinue) {
+        timers.setTimeout(3000) {
+          refreshMission(key)
+        }
+      }
     }
     $.ajax(ajaxSettings)
 

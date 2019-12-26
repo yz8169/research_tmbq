@@ -48,6 +48,14 @@ trait MyFileTool {
       file
     }
 
+    def reCreateDirectoryWhenExist = {
+      if (file.exists && file.isDirectory) {
+        file.deleteQuietly
+        FileUtils.forceMkdir(file)
+      }
+      file
+    }
+
     def namePrefix: String = {
       val fileName = file.getName
       fileName.fileNamePrefix

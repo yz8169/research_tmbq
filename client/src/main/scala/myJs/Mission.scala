@@ -17,6 +17,7 @@ import org.scalajs.dom._
 import org.scalajs.jquery.jQuery
 import org.scalajs.jquery.JQueryAjaxSettings
 import myJs.myPkg.jquery.jquery._
+import implicits.Implicits._
 
 @JSExportTopLevel("Mission")
 object Mission {
@@ -52,7 +53,7 @@ object Mission {
       val formData = new FormData(document.getElementById("form").asInstanceOf[HTMLFormElement])
       jQuery(":disabled").attr("disabled", false)
       val element = div(id := "content",
-        span(id := "info", "Running",
+        span(id := "info", "Files uploading",
           span(id := "progress", "。。。")), " ",
         img(src := "/assets/images/running2.gif", cls := "runningImage")
       ).render
@@ -60,7 +61,7 @@ object Mission {
       val index = layer.alert(element, layerOptions)
       val url = g.jsRoutes.controllers.MissionController.newMission().url.toString
       val xhr = new XMLHttpRequest
-      xhr.open("post", url)
+      xhr.open("post", url, async = true)
       xhr.upload.onprogress = progressHandlingFunction
       xhr.onreadystatechange = (e) => {
         if (xhr.readyState == XMLHttpRequest.DONE) {
@@ -72,7 +73,7 @@ object Mission {
             clearFile
             val base64Key = rs.myGet("key")
             val url = s"${g.jsRoutes.controllers.MissionController.resultBefore().url.toString}?key=${base64Key}"
-            window.open(target = "_blank").location.href = url
+            window.redirect(url)
           } else {
             g.swal("Error", rs.myGet("message"), "error")
           }
