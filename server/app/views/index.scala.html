@@ -5,7 +5,7 @@
 		<div class="form-group col-sm-12">
 			<h2 class="page-heading"
 			style="text-align: left;
-				border-bottom: 5px solid #e9f3f4">Analysis</h2>
+				border-bottom: 5px solid #e9f3f4"></h2>
 		</div>
 	</div>
 
@@ -17,11 +17,11 @@
 				<a target='_blank' style="display: none" id="hideA">&nbsp;</a>
 
 				<div class="form-group">
-					<label class="control-label col-sm-2">Metabolic platform:</label>
+					<label class="control-label col-sm-2">UPLC/TQ-MS platform vendor:</label>
 					<div class="col-sm-4">
 						<select class="form-control" name="kind" onchange="Mission.kindChange(this)">
-							<option value="waters">Waters UPLC</option>
-							<option value="agilent">Agilent  TQ-MS</option>
+							<option value="waters">Waters</option>
+							<option value="agilent">Agilent</option>
 
 						</select>
 					</div>
@@ -78,6 +78,11 @@
 						<button type="reset" class="btn btn-primary" style="width: 90%;">
 							Reset</button>
 					</div>
+
+					<div class="actions  col-sm-2">
+						<a href="@routes.AppController.downloadExampleData()?fileName=demo_data.zip" type="button" class="btn btn-primary" style="width: 90%;">
+							Try our demo data</a>
+					</div>
 				</div>
 
 			</form>
@@ -85,6 +90,19 @@
 
 		</div>
 
+	</div>
+	<hr>
+
+	<div class="row" style="margin: 15px 0px">
+		<div  style="background: transparent;  padding: 12px 0px;">
+			<div class="col-md-9">
+				<div style="color: #555">
+					Please contact: <a href="mailto:wjia@@cc.hawaii.edu">wjia@@cc.hawaii.edu</a>
+					; <a href="mailto:chentianlu@@sjtu.edu.cn">chentianlu@@sjtu.edu.cn</a>
+				</div>
+			</div>
+
+		</div>
 	</div>
 
 	<script>

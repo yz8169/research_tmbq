@@ -85,8 +85,8 @@
 					<li class=""><a href="#1">1. Introduction</a></li>
 					<li><a href="#2">2. Workflow and main features</a></li>
 					<li><a href="#3">3. Input files preparation</a></li>
-					<li><a href="#4">4. The Use of TMBQ Webserver</a></li>
-					<li><a href="#5">5. Interpretation of Analysis results</a></li>
+					<li><a href="#4">4. The use of TMBQ webserver</a></li>
+					<li><a href="#5">5. Interpretation of analysis results</a></li>
 					<li><a href="#6">6. Postscript</a></li>
 				</ul>
 			</div>
@@ -109,9 +109,9 @@
 					<p class="paragraph bold">
 						2. Workflow and main features
 					</p>
+
 					<p class="paragraph">
-						<img src="@routes.Assets.at("images/work_flow.png")"><br>
-						<b>Main features:</b><br>
+						<img src="@routes.Assets.at("images/work_flow.png")" style="width: 80%"><br>
 				<ul>
 					<li>
 						Fulfill the connection between raw LC/MS data to concentration matrix;
@@ -138,7 +138,7 @@
 						Provide unit conversion function;
 					</li>
 					<li>
-						Cluster servers and multithreading technology are employed for high speed (300+ metabolites in 100+ samples, ~ 5 minutes).
+						Cluster servers and multithreading technology are employed for high speed computation (300+ metabolites in 100+ samples, ~ 5 minutes).
 					</li>
 
 				</ul>
@@ -153,31 +153,36 @@
 						3. Input files preparation
 					</p>
 					<p class="paragraph">
-						TMBQ requires the import of the following files:<br>
+						TMBQ requires the import of the following files:
+						<br>
 				<ul style="list-style-type: decimal">
 					<li>
-						A sample list (.xls format),
+						a sample list (.xls format),
 					</li>
 					<li>
-						A compound and parameter table (.xls format), and
+						a compound and parameter table (.xls format), and
 					</li>
 					<li>
-						A raw data file (.zip format).
+						a raw data file (.zip format).
 					</li>
 				</ul>
 					</p>
 					<p class="paragraph">
-						3.1 A sample list<br>
-						A sample list is a list of involved samples with batch index (1, 2, …), raw data file name, sample type (Standard or Analyte), and concentrations of standards. At least one concentration gradient (e.g. Conc A) is required and more than one concentration gradients (maximum 50) are allowed. In each batch, at least 2 standard samples and 1 analyte sample are required.
+						3.1 The sample list file
+						<br>
+						The sample list file contains a list of batch index (1, 2, …), raw data file name, sample type (Standard or Analyte), and concentrations of standards. At least one concentration gradient (e.g. Conc A) is required and more than one concentration gradients (maximum 50) are allowed. In each batch, at least 2 standard samples and 1 analyte sample are required. 
 						<br><img src="@routes.Assets.at("images/sample_config_file.png")">
 					</p>
 
 					<p class="paragraph">
-						3.2 A compound and parameter table<br>
-						A compound and parameter table is a list of compounds for quantification with detailed processing parameters (one compound per row). The final results depend on the parameters in this file and great efforts are suggested to be devoted to an optimal parameter table. The meanings and allowed values of the parameters are listed below.
+						3.2 The compound and parameter table file
 						<br>
-						Missing values are not allowed in the whole table. Duplicated contents are not allowed in column 1 and 2 respectively. The indexes of internal standards should be started by “IS”. The values in columns "ws4pp", "i4pp", "mp4rs", "snr4pp", "nups4pp", "downs4pp", "lp4e", "rp4e", "mp4e", and "function" should be integers larger than zero. The values in columns "ws4pp" and "ws4pa" should be odd numbers. The values of “IS_correction” column should be “none” (do not perform IS correction) or any IS index (consistent to one of the index in column 1). The values of “STD” column should be consistent to the header of column D, E, …. of the sample list file. All the values are case-insensitive.
-						<br>The final generated table should look like:<br>
+						The compound and parameter table contains a list of compounds for quantification with detailed processing parameters (one compound per row). The final results depend on the parameters in this file and great efforts are suggested to be devoted to an optimal parameter table. The permitted and recommended values of all the parameters are listed below. 
+						<br>
+						Missing values are not allowed in the whole table. Duplicated contents are not allowed in column 1 and 2. The indexes of internal standards should be started by “IS”. The values in columns "ws4pp", "i4pp", "mp4rs", "snr4pp", "nups4pp", "downs4pp", "lp4e", "rp4e", "mp4e", and "function" should be integers larger than zero. The values in columns "ws4pp" and "ws4pa" should be odd numbers. The values of “IS_correction” column should be “none” (do not perform IS correction) or any IS index (consistent to one of the index in column 1). The values of “STD” column should be consistent to the header of column D, E, …. of the sample list file. All the values are case-insensitive. 
+						<br>
+						The final generated table should look like:
+						<br>
 						<img src="@routes.Assets.at("images/result.png")">
 					</p>
 
@@ -215,20 +220,19 @@
 			<div class="row" id="4">
 				<div class="col-xs-12">
 					<p class="paragraph bold">
-						4. The Use of TMBQ Webserver
+						4. The use of TMBQ webserver
 					</p>
 					<p class="paragraph">
-						4.1 Registration<br>
-						Please click <a href="http://119.136.25.134:9000/" target="_blank">http://119.136.25.134:9000/</a>
-						 to visit TMBQ webserver. Currently, common web browsers such as IE, Chrome, Edge and Firefox are supported.
+						Please visit TMBQ webserver here <a href="http://119.136.25.134:9011/" target="_blank">
+						http://119.136.25.134:9011/</a>
+						 . Currently, common web browsers such as IE, Chrome, Edge and Firefox are supported. 
 						<br>
-						Registration is required for the first time one use the web server. User name, password, and an active email address should be provided. A notification email when your project is finished will be send to the address you provided here. After registration, one can sign in with the user name.
+						An active email address should be provided as a notification email will be send to the address you provided when your project is finished. You can download the result by the link in the email which will be valid for 3 months. Otherwise, if you do not close the webpage and keep waiting, a save window will pop-up and you can save the result directly.
 					</p>
-					<p class="paragraph">
-						4.2 File upload<br>
-						<img src="@routes.Assets.at("images/new_mission.png")"><br>
-						You can log in again and download the result from the “Project explorer” part later.
-					</p>
+					<br><img src="@routes.Assets.at("images/home.png")">
+					<br><img src="@routes.Assets.at("images/wait.png")">
+					<br><img src="@routes.Assets.at("images/email.png")">
+
 
 				</div>
 			</div>
@@ -236,7 +240,7 @@
 			<div class="row" id="5">
 				<div class="col-xs-12">
 					<p class="paragraph bold">
-						5. Interpretation of Analysis results
+						5. Interpretation of analysis results
 					</p>
 					<p class="paragraph">
 						The analysis result contains 2 folders and 2 .xls files, named as "plot_peaks", "plot_regress", “concentration.xls”, and "intensity.xls" respectively.
@@ -266,11 +270,12 @@
 						6. Postscript
 					</p>
 					<p class="paragraph">
-						As far as we know, TMBQ (Targeted Metabolome Batch Quantification) is the first freely available tool designed to fulfill the connection between UPLC/TQ-MS raw data and targeted metabolome quantification. It covers almost all the widely used functions and key parameters provided by existing commercial tools (e.g. TargetLynx and MassHunter). The outputted figures and tables are also similar to them. Therefore, it is not hard for researchers to switch from existing tools to TMBQ. To promote the levels of automation and standardization, interactive modification of compound peaks, integral areas, and sample points involved in standard curves fitting are not supported and two additional functional modules, for key parameters auto-tuning and for unit conversion, are added. Consequently, TMBQ is a good complement to existing tools, especially for large-scale and multi-batch applications and those with high requirements for speed and reproducibility.
+						As far as we know, TMBQ (Targeted Metabolome Batch Quantification) is the first freely available tool designed to fulfill the connection between UPLC/TQ-MS raw data and targeted metabolome quantification. It covers almost all the widely used functions and key parameters provided by existing commercial tools (e.g. TargetLynx and MassHunter). The outputted figures and tables are also similar to them. Therefore, it is not hard for researchers to switch from existing tools to TMBQ. To promote the levels of automation and standardization, interactive modification of compound peaks, integral areas, and sample points involved in standard curves fitting are not supported. Consequently, TMBQ is a good complement to existing tools, especially for large-scale and multi-batch applications and those with high requirements for speed and reproducibility. 
 						<br>
-						To improve the quality of standard curves which is crucial for following concentration computation, a new algorithm was used in TMBQ. Cluster servers and multithreading technology are employed. The parameters in the compound list file are crucial to the final result and so deserve great efforts for tuning. This may be the most time consuming step of TMBQ strategy. Once the parameters are determined, only small adjustments of few parameters (e.g. RT) are needed for subsequent analysis unless sample type or analytical protocols are different.
+						To improve the quality of standard curves which is crucial for following concentration computation, a new algorithm was used in TMBQ. Cluster servers and multithreading technology are employed. The parameters in the compound list file are crucial to the final result and so deserve great efforts for tuning. This may be the most time consuming step of TMBQ strategy. Once the parameters are determined, only small adjustments of few parameters (e.g. RT) are needed for subsequent analysis unless sample type or analytical protocols are different. 
 						<br>
-						While we still face many challenges ahead, ongoing efforts are devoted for performances improvement such as supporting more instrument and data types, designing better algorithm for peak identification and curve fitting, tuning key parameters by machine learning. Bug reports and various suggestions are welcome.
+						While we still face many challenges ahead, ongoing efforts are devoted for performances improvement such as supporting more instrument and data types, designing better algorithm for peak identification and curve fitting, tuning key parameters by machine learning. Bug reports and various suggestions are welcome to <a href="mailto:chentianlu@@sjtu.edu.cn">
+						chentianlu@@sjtu.edu.cn</a> and <a href="mailto:wjia@@cc.hawaii.edu">wjia@@cc.hawaii.edu</a>.
 					</p>
 				</div>
 			</div>

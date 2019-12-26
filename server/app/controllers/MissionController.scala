@@ -93,6 +93,7 @@ class MissionController @Inject()(cc: ControllerComponents, formTool: FormTool,
           case msg: JsValue if (msg \ "key").asOpt[String].nonEmpty =>
             val key = (msg \ "key").as[String]
             val missionId = Tool.getMissionIdByKey(key)
+            println(missionId)
             system.scheduler.scheduleOnce(0 seconds, self, MissionAction(missionId, "update"))
           case MissionAction(missionId, action) =>
             missionDao.selectByMissionIdOp(missionId).map {

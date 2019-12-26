@@ -413,7 +413,7 @@ object Tool {
 
   def getRequestHost(implicit configDao: ConfigDao) = {
     val dbHost = Utils.execFuture(configDao.selectHost).value
-    if (isWindows) {
+    if (false) {
       "localhost:9000"
     } else dbHost
   }
@@ -445,14 +445,15 @@ object Tool {
            |If the email was not meant for your, please ignore this email.<br>
            |<br>
            |Regards,<br>
-           |Human Metabolomics lnstitute lnc.
+           |Shanghai Jiao Tong University Affiliated Six People’s Hospital.
        """.stripMargin
       val info = Info("Task notification", content)
       val inbox = email
       //      val sender = Sender("Human Metabolomics lnstitute lnc.", "smtp.exmail.qq.com", "yinzheng@vgbioteam.com", "Abc1144612652")
-      val sender = Sender("Human Metabolomics lnstitute lnc.", "smtp.exmail.qq.com", "info@hmibiotech.com", "Huiyun1234")
+      val sender = Sender("Shanghai Jiao Tong University Affiliated Six People’s Hospital.", "smtp.163.com", "chentianlu79@163.com", "chentianlu1234")
+      //      val sender = Sender("Shanghai Jiao Tong University Affiliated Six People’s Hospital.", "smtp.163.com", "abc1454190131@163.com", "yz8169")
 
-      sendEmailBySsl(sender, info, inbox)
+      send163EmailBySsl(sender, info, inbox)
     }
 
   }
