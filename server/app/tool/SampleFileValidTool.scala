@@ -147,6 +147,14 @@ class SampleFileValidTool(lines: List[List[String]]) {
     Validated.cond(valid, true, messages.head)
   }
 
+  def validRowNum = {
+    val valid = lines.size <= 101
+    val message = if (!valid) {
+      s"Thank you for using. The academic version cannot process large dataset with more than 100 samples or compounds. Please contact us for more information!"
+    } else ""
+    Validated.cond(valid, true, message)
+  }
+
 }
 
 object SampleFileValidTool {
@@ -170,6 +178,8 @@ object SampleFileValidTool {
       validFactorColumn
     }.andThen { b =>
       validFileNameColumn(fileNames)
+    }.andThen { b =>
+      validRowNum
     }
 
   }

@@ -153,6 +153,14 @@ class CompoundFileValidTool(lines: List[List[String]]) {
     Validated.cond(valid, true, messages.head)
   }
 
+  def validRowNum = {
+    val valid = lines.size <= 101
+    val message = if (!valid) {
+      s"Thank you for using. The academic version cannot process large dataset with more than 100 samples or compounds. Please contact us for more information!"
+    } else ""
+    Validated.cond(valid, true, message)
+  }
+
   def validMp4rsMoreMp4e = {
     val info = lines.drop(1).zipWithIndex.map { case (tmpColumns, i) =>
       val columns = tmpColumns.padTo(headers.size, "")
@@ -357,6 +365,8 @@ object CompoundFileValidTool {
       validRs4rsColumn
     }.andThen { b =>
       validMp4rsMoreMp4e
+    }.andThen { b =>
+      validRowNum
     }
 
   }

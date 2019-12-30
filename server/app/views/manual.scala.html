@@ -67,6 +67,11 @@
 				font-weight: bold;
 			}
 
+			.myImg {
+				padding: 4px;
+				border: 1px solid #ddd;
+			}
+
 
 	</style>
 
@@ -123,19 +128,13 @@
 						Parameters for peak picking and intensity integral are independent, more accurate;
 					</li>
 					<li>
-						Simple inputs. One data file (.zip) and 2 configuration files (.xls) are required;
+						Simple inputs. One data file (.zip) and 2 configuration files (.xlsx) are required;
 					</li>
 					<li>
 						Results are fully compatible with numerous downstream applications;
 					</li>
 					<li>
 						Support raw data of UPLC-TQ/MS instruments from Agilent and Waters (format conversion by Proteowizard is required);
-					</li>
-					<li>
-						Provide semi-automatic parameters setting function ;
-					</li>
-					<li>
-						Provide unit conversion function;
 					</li>
 					<li>
 						Cluster servers and multithreading technology are employed for high speed computation (300+ metabolites in 100+ samples, ~ 5 minutes).
@@ -157,10 +156,10 @@
 						<br>
 				<ul style="list-style-type: decimal">
 					<li>
-						a sample list (.xls format),
+						a sample list (.xlsx format),
 					</li>
 					<li>
-						a compound and parameter table (.xls format), and
+						a compound and parameter table (.xlsx format), and
 					</li>
 					<li>
 						a raw data file (.zip format).
@@ -223,15 +222,14 @@
 						4. The use of TMBQ webserver
 					</p>
 					<p class="paragraph">
-						Please visit TMBQ webserver here <a href="http://119.136.25.134:9011/" target="_blank">
-						http://119.136.25.134:9011/</a>
-						 . Currently, common web browsers such as IE, Chrome, Edge and Firefox are supported. 
+						Please visit TMBQ webserver here  <a href="http://119.136.25.134:9011/" target="_blank">
+							http://119.136.25.134:9011/</a>. Currently, common web browsers such as IE, Chrome, Edge and Firefox are supported.  
 						<br>
-						An active email address should be provided as a notification email will be send to the address you provided when your project is finished. You can download the result by the link in the email which will be valid for 3 months. Otherwise, if you do not close the webpage and keep waiting, a save window will pop-up and you can save the result directly.
+							An active email address is suggested  to be provided as a notification email will be send to the address you provided when your project is finished. You can download the result by the link in the email which will be valid for 3 months. Otherwise, if you haven’t filled in your email, please do not close the webpage and keep waiting. A save window will pop-up once the task is done.
 					</p>
-					<br><img src="@routes.Assets.at("images/home.png")">
-					<br><img src="@routes.Assets.at("images/wait.png")">
-					<br><img src="@routes.Assets.at("images/email.png")">
+					<br><img src="@routes.Assets.at("images/home.png")" class="myImg" style="margin-bottom: 20px">
+					<br><img src="@routes.Assets.at("images/wait.png")" class="myImg" style="margin-bottom: 20px">
+					<br><img src="@routes.Assets.at("images/email.png")" class="myImg">
 
 
 				</div>
@@ -243,12 +241,12 @@
 						5. Interpretation of analysis results
 					</p>
 					<p class="paragraph">
-						The analysis result contains 2 folders and 2 .xls files, named as "plot_peaks", "plot_regress", “concentration.xls”, and "intensity.xls" respectively.
+						The analysis result contains 2 folders and 2 .xlsx files, named as "plot_peaks", "plot_regress", “concentration.xlsx”, and "intensity.xlsx" respectively.
 						<br>
-						The file named “concentration.xls” contains 1) concentrations of every compound in every sample, 2) all the user defined parameters, and 3) R square and formula of calibrated curves, and 4) some simple statistical results (mean, S.D., RSD%, etc). The reliabilities of the sample concentrations are colored. It looks like following.
+						The file named “concentration.xlsx” contains 1) concentrations of every compound in every sample, 2) all the user defined parameters, and 3) R square and formula of calibrated curves, and 4) some simple statistical results (mean, S.D., RSD%, etc). The reliabilities of the sample concentrations are colored. It looks like following.
 						<br>
 						<img src="@routes.Assets.at("images/intensity_1.png")"><br>
-						The file named “intensity.xls” contains intensities of every compound in every sample. It looks like following.
+						The file named “intensity.xlsx” contains intensities of every compound in every sample. It looks like following.
 						<br>
 						<img src="@routes.Assets.at("images/intensity_2.png")"><br>
 						The peaks for every compound are saved in the plot folder, one file per compound. Take the compound sarcosine in sample “sample01” as an example. The raw signal of the target compound (extracted by corresponding function and ion pair), signal after smooth by user defined parameters, and signal used for intensity calculation (integral area is colored in blue) are as following respectively. The basic information and some key parameters are displayed in the figures. Each red dot means a scan point of detection. In the middle figure (the smoothed signal for peak picking), the dot-dash lines in blue are user defined RT window, the red solid lines indicate the rising and ending points of target peak, and the solid black line indicates the summit of the peak.
